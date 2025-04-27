@@ -117,3 +117,54 @@ def ask_pipe_properties():
 # Example usage
 #pipe_properties = ask_pipe_properties()
 #print(f"You entered: {pipe_properties}")
+
+import math
+
+def calculate_outer_surface(pipe_properties):
+    """
+    Calculates the outer contact surface area of a pipe.
+
+    Parameters:
+        pipe_properties (dict): dictionary with 'inter_diameter', 'thickness', 'length' (all in meters)
+
+    Returns:
+        float: outer surface area in m²
+    """
+    outer_diameter = pipe_properties["inter_diameter"] + 2 * pipe_properties["thickness"]
+    length = pipe_properties["length"]
+
+    # Calculate the outer surface area
+    outer_surface_area = math.pi * outer_diameter * length
+
+    return outer_surface_area
+
+# Example usage
+pipe = ask_pipe_properties()  # Re-use the previous function to get pipe characteristics
+outer_area = calculate_outer_surface(pipe)
+print(f"The outer surface area of the pipe is {outer_area:.4f} m².")
+
+
+def calculate_conduction_resistance(pipe_properties, k):
+    """
+    Calculates the conduction thermal resistance through the pipe wall.
+
+    Parameters:
+        pipe_properties (dict): dictionary with 'inter_diameter', 'thickness', 'length'
+        k (float): thermal conductivity in W·m⁻¹·K⁻¹
+
+    Returns:
+        float: conduction resistance in K/W
+    """
+    r_inner = pipe_properties["inter_diameter"] / 2
+    r_outer = r_inner + pipe_properties["thickness"]
+    length = pipe_properties["length"]
+
+    R_cond = math.log(r_outer / r_inner) / (2 * math.pi * k * length)
+    return R_cond
+
+
+if k is not None:
+    R_cond = calculate_conduction_resistance(pipe, k)
+    print(f"The conduction thermal resistance of the pipe is {R_cond:.6f} K/W.")
+else:
+    print("Cannot calculate without valid thermal conductivity.")
