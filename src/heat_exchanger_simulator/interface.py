@@ -9,7 +9,7 @@ def create_main_window():
     w.config(bg="#f0f0f0")  # Donne une couleur de fond plus moderne
 
     # Charger l'image du logo EPFL avec Pillow et ajuster la taille
-    img = Image.open("epfl_logo.png")  # Remplace par le bon chemin de ton logo
+    img = Image.open("src/heat_exchanger_simulator/epfl_logo.png")  # Remplace par le bon chemin de ton logo
     img = img.resize((100, 60), Image.Resampling.LANCZOS)  # Taille du logo plus adaptée, largeur 100px, hauteur 60px
     logo = ImageTk.PhotoImage(img)
 
