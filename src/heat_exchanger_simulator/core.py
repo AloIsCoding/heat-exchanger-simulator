@@ -1,15 +1,5 @@
-# Dictionary of specific heat capacities (J/kg·K)
-specific_heat_capacity = {
-    "water": 4186,
-    "air": 1005,
-    "thermal oil": 2200,
-    "glycol": 2400,
-    "steam": 2010,
-    "nitrogen": 1040,
-    "carbon dioxide": 844,
-    "ammonia": 4700,
-    "helium": 5190
-}
+#all the basics calculations
+
 
 def calculate_heat_transfer(fluid, mass_flow_rate, temp_in, temp_out):
     """
@@ -33,28 +23,17 @@ def calculate_heat_transfer(fluid, mass_flow_rate, temp_in, temp_out):
     Q = mass_flow_rate * cp * (temp_in - temp_out)
     return Q
 
-# Example usage
-fluid = input("Enter the fluid used in your heat exchanger: ").strip().lower()
-mass_flow_rate = float(input("Enter the mass flow rate (kg/s): "))
-temp_in = float(input("Enter the inlet temperature (°C): "))
-temp_out = float(input("Enter the outlet temperature (°C): "))
+# Example usage => ça c'est plutot pour l'interface au début i think
+#fluid = input("Enter the fluid used in your heat exchanger: ").strip().lower()
+#mass_flow_rate = float(input("Enter the mass flow rate (kg/s): "))
+#temp_in = float(input("Enter the inlet temperature (°C): "))
+#temp_out = float(input("Enter the outlet temperature (°C): "))
 
 Q = calculate_heat_transfer(fluid, mass_flow_rate, temp_in, temp_out)
 
 if Q is not None:
     print(f"The heat transferred is {Q:.2f} watts.")
 
-
-# Detailed thermal conductivities (W·m⁻¹·K⁻¹)
-thermal_conductivity = {
-    "stainless steel": 16,     # AISI 304
-    "mild steel": 50,          # Low carbon steel
-    "iron": 80,                # Pure iron
-    "aluminum (pure)": 237,    # 99.9% Al
-    "aluminum (alloy)": 120,   # Common alloy
-    "copper (pure)": 401,      # 99.9% Cu
-    "copper (annealed)": 385,  # Softer, lower purity copper
-}
 
 # Ask the user to enter a specific type of metal
 metal = input("Enter a metal (e.g., stainless steel, aluminum (alloy)): ").strip().lower()
@@ -88,9 +67,9 @@ def ask_fluid_properties():
 
     return fluid_name, specific_heat
 
-# Example usage
-fluid, cp = ask_fluid_properties()
-print(f"You entered: {fluid} with a specific heat capacity of {cp} J·kg⁻¹·K⁻¹.")
+# Example usage => et ça pour le rapport à la fin ?
+#fluid, cp = ask_fluid_properties()
+#print(f"You entered: {fluid} with a specific heat capacity of {cp} J·kg⁻¹·K⁻¹.")
 
 
 def ask_pipe_properties():
@@ -136,5 +115,5 @@ def ask_pipe_properties():
     }
 
 # Example usage
-pipe_properties = ask_pipe_properties()
-print(f"You entered: {pipe_properties}")
+#pipe_properties = ask_pipe_properties()
+#print(f"You entered: {pipe_properties}")
