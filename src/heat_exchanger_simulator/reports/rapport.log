@@ -1,0 +1,878 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.4.29)  29 APR 2025 19:59
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./reports/rapport.tex
+(reports/rapport.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count195
+\Gm@cntv=\count196
+\c@Gm@tempcnt=\count197
+\Gm@bindingoffset=\dimen141
+\Gm@wd@mp=\dimen142
+\Gm@odd@mp=\dimen143
+\Gm@even@mp=\dimen144
+\Gm@layoutwidth=\dimen145
+\Gm@layoutheight=\dimen146
+\Gm@layouthoffset=\dimen147
+\Gm@layoutvoffset=\dimen148
+\Gm@dimlist=\toks18
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics
+.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.d
+ef
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen149
+\Gin@req@width=\dimen150
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks19
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/doublestroke\dsfont.s
+ty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fourier.sty
+Package: fourier 2024/09/08 2.4 fourier-GUTenberg package
+Now handling font encoding FML ...
+... no UTF-8 mapping file for font encoding FML
+Now handling font encoding FMS ...
+... no UTF-8 mapping file for font encoding FMS
+Now handling font encoding FMX ...
+... no UTF-8 mapping file for font encoding FMX
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+futs on input line 1
+12.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\t1futs.fd
+File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fourier-orns.
+sty
+Package: fourier-orns 2024/09/08 2.4 fourier-ornaments package
+)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 64.
+LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
+(Font)              `operators' in the math version `normal' on input line 64.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> T1/futs/m/n on input line 64.
+LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
+(Font)              `operators' in the math version `bold' on input line 64.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> T1/futs/m/n on input line 64.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  T1/futs/m/n --> T1/futs/b/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 73.
+LaTeX Font Info:    Encoding `OML' has changed to `FML' for symbol font
+(Font)              `letters' in the math version `normal' on input line 73.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> FML/futmi/m/it on input line 73.
+LaTeX Font Info:    Encoding `OML' has changed to `FML' for symbol font
+(Font)              `letters' in the math version `bold' on input line 73.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> FML/futmi/m/it on input line 73.
+\symotherletters=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  FML/futmi/m/it --> FML/futmi/b/it on input line 75.
+LaTeX Font Info:    Overwriting symbol font `otherletters' in version `bold'
+(Font)                  FML/futm/m/it --> FML/futm/b/it on input line 76.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 77.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 78.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 79.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 80.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 81.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 82.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 83.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 84.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 85.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 86.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 87.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 127.
+LaTeX Font Info:    Encoding `OMS' has changed to `FMS' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 127.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> FMS/futm/m/n on input line 127.
+LaTeX Font Info:    Encoding `OMS' has changed to `FMS' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 127.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> FMS/futm/m/n on input line 127.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 128.
+LaTeX Font Info:    Encoding `OMX' has changed to `FMX' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 1
+28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> FMX/futm/m/n on input line 128.
+LaTeX Font Info:    Encoding `OMX' has changed to `FMX' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 128
+.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> FMX/futm/m/n on input line 128.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 129.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> T1/futs/bx/n on input line 129.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> T1/futs/bx/n on input line 129.
+LaTeX Font Info:    Redeclaring math alphabet \mathrm on input line 130.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 131.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> T1/futs/m/it on input line 131.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> T1/futs/m/it on input line 131.
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 132.
+LaTeX Font Info:    Redeclaring math symbol \varkappa on input line 133.
+LaTeX Font Info:    Redeclaring math symbol \leqslant on input line 139.
+LaTeX Font Info:    Redeclaring math symbol \geqslant on input line 140.
+LaTeX Font Info:    Redeclaring math symbol \vDash on input line 143.
+LaTeX Font Info:    Redeclaring math symbol \blacktriangleleft on input line 14
+4.
+LaTeX Font Info:    Redeclaring math symbol \blacktriangleright on input line 1
+45.
+LaTeX Font Info:    Redeclaring math symbol \nleqslant on input line 146.
+LaTeX Font Info:    Redeclaring math symbol \ngeqslant on input line 147.
+LaTeX Font Info:    Redeclaring math symbol \parallel on input line 148.
+LaTeX Font Info:    Redeclaring math symbol \nparallel on input line 149.
+LaTeX Font Info:    Redeclaring math symbol \nvDash on input line 151.
+LaTeX Font Info:    Redeclaring math symbol \intercal on input line 152.
+LaTeX Font Info:    Redeclaring math symbol \hslash on input line 153.
+LaTeX Font Info:    Redeclaring math symbol \nexists on input line 154.
+LaTeX Font Info:    Redeclaring math symbol \complement on input line 155.
+LaTeX Font Info:    Redeclaring math symbol \varsubsetneq on input line 156.
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 162.
+LaTeX Font Info:    Redeclaring math symbol \smallsetminus on input line 163.
+LaTeX Font Info:    Redeclaring math symbol \subsetneqq on input line 164.
+LaTeX Font Info:    Redeclaring math symbol \rightrightarrows on input line 165
+.
+LaTeX Font Info:    Redeclaring math symbol \leftleftarrows on input line 166.
+LaTeX Font Info:    Redeclaring math symbol \square on input line 167.
+LaTeX Font Info:    Redeclaring math symbol \curvearrowleft on input line 168.
+LaTeX Font Info:    Redeclaring math symbol \curvearrowright on input line 169.
+
+LaTeX Font Info:    Redeclaring math symbol \blacksquare on input line 170.
+LaTeX Font Info:    Redeclaring math symbol \varkappa on input line 200.
+LaTeX Font Info:    Redeclaring math symbol \varvarrho on input line 201.
+LaTeX Font Info:    Redeclaring math delimiter \Vert on input line 224.
+LaTeX Font Info:    Redeclaring math delimiter \vert on input line 229.
+LaTeX Font Info:    Redeclaring math delimiter \Downarrow on input line 239.
+LaTeX Font Info:    Redeclaring math delimiter \backslash on input line 241.
+LaTeX Font Info:    Redeclaring math delimiter \rangle on input line 243.
+LaTeX Font Info:    Redeclaring math delimiter \langle on input line 245.
+LaTeX Font Info:    Redeclaring math delimiter \rbrace on input line 247.
+LaTeX Font Info:    Redeclaring math delimiter \lbrace on input line 249.
+LaTeX Font Info:    Redeclaring math delimiter \rceil on input line 251.
+LaTeX Font Info:    Redeclaring math delimiter \lceil on input line 253.
+LaTeX Font Info:    Redeclaring math delimiter \rfloor on input line 255.
+LaTeX Font Info:    Redeclaring math delimiter \lfloor on input line 257.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 261.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 262.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 263.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 264.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 265.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 266.
+LaTeX Font Info:    Redeclaring math accent \check on input line 267.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 268.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 269.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 270.
+\symUfutm=\mathgroup7
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cf
+g
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.lt
+x)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
+Package xcolor Info: Model `RGB' extended on input line 1366.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen151
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen152
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count198
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count199
+\leftroot@=\count266
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count267
+\DOTSCASE@=\count268
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen153
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count269
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count270
+\dotsspace@=\muskip16
+\c@parentequation=\count271
+\dspbrk@lvl=\count272
+\tag@help=\toks21
+\row@=\count273
+\column@=\count274
+\maxfields@=\count275
+\andhelp@=\toks22
+\eqnshift@=\dimen154
+\alignsep@=\dimen155
+\tagshift@=\dimen156
+\tagwidth@=\dimen157
+\totwidth@=\dimen158
+\lineht@=\dimen159
+\@envbody=\toks23
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/ulem\ulem.sty
+\UL@box=\box53
+\UL@hyphenbox=\box54
+\UL@skip=\skip53
+\UL@hook=\toks25
+\UL@height=\dimen160
+\UL@pe=\count276
+\UL@pixel=\dimen161
+\ULC@box=\box55
+Package: ulem 2019/11/18
+\ULdepth=\dimen162
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/filecontents\filecont
+ents.sty
+Package: filecontents 2023/04/02 v1.5a Create an external file from within a La
+TeX document
+
+
+Package filecontents Warning: This package is obsolete. Disabling it and
+(filecontents)                passing control to the filecontents environment
+(filecontents)                defined by the LaTeX kernel.
+
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/mnsymbol\MnSymbol.sty
+Package: MnSymbol 2007/01/21 v1.4 support for the MnSymbol font
+LaTeX Info: Redefining \dagger on input line 84.
+LaTeX Info: Redefining \ddagger on input line 84.
+LaTeX Info: Redefining \mathparagraph on input line 84.
+LaTeX Info: Redefining \mathsection on input line 84.
+LaTeX Info: Redefining \mathdollar on input line 84.
+LaTeX Info: Redefining \mathsterling on input line 84.
+LaTeX Info: Redefining \yen on input line 84.
+LaTeX Info: Redefining \circledR on input line 84.
+LaTeX Info: Redefining \circledS on input line 84.
+LaTeX Info: Redefining \Re on input line 84.
+LaTeX Info: Redefining \Im on input line 84.
+LaTeX Info: Redefining \dotplus on input line 84.
+LaTeX Info: Redefining \thicksim on input line 84.
+LaTeX Info: Redefining \thickapprox on input line 84.
+LaTeX Info: Redefining \veebar on input line 84.
+LaTeX Info: Redefining \barwedge on input line 84.
+LaTeX Info: Redefining \doublebarwedge on input line 84.
+LaTeX Info: Redefining \centerdot on input line 84.
+LaTeX Info: Redefining \divideontimes on input line 84.
+\symMnSyA=\mathgroup8
+\symMnSyB=\mathgroup9
+\symMnSyC=\mathgroup10
+\symMnSyD=\mathgroup11
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 119.
+LaTeX Font Info:    Encoding `FMX' has changed to `OMX' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 1
+19.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  FMX/futm/m/n --> OMX/MnSymbolE/m/n on input line 119.
+LaTeX Font Info:    Encoding `FMX' has changed to `OMX' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 119
+.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  FMX/futm/m/n --> OMX/MnSymbolE/m/n on input line 119.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 120.
+LaTeX Font Info:    Encoding `FMS' has changed to `U' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 120.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  FMS/futm/m/n --> U/MnSymbolF/m/n on input line 120.
+LaTeX Font Info:    Encoding `FMS' has changed to `U' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 120.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  FMS/futm/m/n --> U/MnSymbolF/m/n on input line 120.
+LaTeX Font Info:    Overwriting symbol font `MnSyA' in version `bold'
+(Font)                  U/MnSymbolA/m/n --> U/MnSymbolA/b/n on input line 121.
+LaTeX Font Info:    Overwriting symbol font `MnSyB' in version `bold'
+(Font)                  U/MnSymbolB/m/n --> U/MnSymbolB/b/n on input line 122.
+LaTeX Font Info:    Overwriting symbol font `MnSyC' in version `bold'
+(Font)                  U/MnSymbolC/m/n --> U/MnSymbolC/b/n on input line 123.
+LaTeX Font Info:    Overwriting symbol font `MnSyD' in version `bold'
+(Font)                  U/MnSymbolD/m/n --> U/MnSymbolD/b/n on input line 124.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/MnSymbolE/m/n --> OMX/MnSymbolE/b/n on input line 1
+25.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  U/MnSymbolF/m/n --> U/MnSymbolF/b/n on input line 126.
+LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 241.
+LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `normal'
+(Font)                  FMS/futm/m/n --> OMS/MnSymbolS/m/n on input line 241.
+LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `bold'
+(Font)                  FMS/futm/m/n --> OMS/MnSymbolS/m/n on input line 241.
+LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `bold'
+(Font)                  OMS/MnSymbolS/m/n --> OMS/MnSymbolS/b/n on input line 2
+41.
+LaTeX Info: Redefining \longrightarrow on input line 548.
+LaTeX Info: Redefining \longleftarrow on input line 549.
+LaTeX Info: Redefining \longleftrightarrow on input line 550.
+LaTeX Info: Redefining \Longrightarrow on input line 551.
+LaTeX Info: Redefining \Longleftarrow on input line 552.
+LaTeX Info: Redefining \Longleftrightarrow on input line 553.
+LaTeX Info: Redefining \longmapsto on input line 554.
+LaTeX Info: Redefining \vdots on input line 868.
+LaTeX Font Info:    Redeclaring math symbol \braceld on input line 1721.
+LaTeX Font Info:    Redeclaring math symbol \bracelu on input line 1722.
+LaTeX Font Info:    Redeclaring math symbol \bracerd on input line 1723.
+LaTeX Font Info:    Redeclaring math symbol \braceru on input line 1724.
+LaTeX Info: Redefining \downbracefill on input line 1799.
+LaTeX Info: Redefining \upbracefill on input line 1800.
+LaTeX Info: Redefining \overbrace on input line 1819.
+LaTeX Info: Redefining \underbrace on input line 1820.
+LaTeX Info: Redefining \surd on input line 1843.
+LaTeX Font Info:    Redeclaring math accent \widehat on input line 1845.
+LaTeX Font Info:    Redeclaring math accent \widetilde on input line 1846.
+LaTeX Font Info:    Redeclaring math accent \wideparen on input line 1847.
+LaTeX Font Info:    Redeclaring math accent \vec on input line 1848.
+) (C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/wasysym\wasysym.sty
+Package: wasysym 2020/01/19 v2.4 Wasy-2 symbol support package
+\symwasy=\mathgroup12
+LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
+(Font)                  U/wasy/m/n --> U/wasy/b/n on input line 93.
+LaTeX Font Info:    Redeclaring math symbol \invneg on input line 242.
+) (C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks26
+\inpenc@posthook=\toks27
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-p
+dftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count277
+\l__pdf_internal_box=\box56
+)
+(C:\Users\aloisse\Desktop\projet de prog\heat-exchanger-simulator\src\heat_exch
+anger_simulator\reports\rapport.aux)
+\openout1 = `rapport.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 10.
+LaTeX Font Info:    Trying to load font information for FML+futm on input line 
+10.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fmlfutm.fd
+File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
+)
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 10.
+LaTeX Font Info:    Trying to load font information for FMS+futm on input line 
+10.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fmsfutm.fd
+File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
+)
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 10.
+LaTeX Font Info:    Trying to load font information for FMX+futm on input line 
+10.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fmxfutm.fd
+File: fmxfutm.fd futm-extension
+)
+LaTeX Font Info:    ... okay on input line 10.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(45.80893pt, 505.89pt, 45.80894pt)
+* v-part:(T,H,B)=(106.75473pt, 578.15999pt, 160.13213pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=505.89pt
+* \textheight=578.15999pt
+* \oddsidemargin=-26.46106pt
+* \evensidemargin=-26.46106pt
+* \topmargin=-2.51526pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.
+mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count278
+\scratchdimen=\dimen163
+\scratchbox=\box57
+\nofMPsegments=\count279
+\nofMParguments=\count280
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count281
+\MPscratchDim=\dimen164
+\MPnumerator=\count282
+\makeMPintoPDFobject=\count283
+\everyMPtoPDFconversion=\toks29
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf
+-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr
+.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/grfext\grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefi
+nekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.s
+ty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.s
+ty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcm
+ds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys
+.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+LaTeX Font Info:    Redeclaring math accent \widehat on input line 10.
+LaTeX Font Info:    Redeclaring math accent \widetilde on input line 10.
+LaTeX Font Info:    Trying to load font information for FML+futmi on input line
+ 11.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\fmlfutmi.fd
+File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 11.
+
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 11.
+
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 13.24796pt on input line 11.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 11.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 7.35999pt on input line 11.
+LaTeX Font Info:    Trying to load font information for U+wasy on input line 11
+.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/wasysym\uwasy.fd
+File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
+)
+(C:\Users\aloisse\Desktop\projet de prog\heat-exchanger-simulator\src\heat_exch
+anger_simulator\reports\rapport.toc)
+\tf@toc=\write3
+\openout3 = `rapport.toc'.
+
+LaTeX Font Info:    Trying to load font information for TS1+futs on input line 
+20.
+
+(C:\Users\aloisse\AppData\Local\Programs\MiKTeX\tex/latex/fourier\ts1futs.fd
+File: ts1futs.fd 2003/09/14 Fontinst v1.801 font definitions for TS1/futs.
+)
+! Undefined control sequence.
+l.27 \end{itemize}\n
+                    
+? git status
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? git init
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? git commit -m "Initial commit"git push
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? C:\Users\aloisse\Desktop\projet de prog\heat-exchanger-simulator\src\heat_exc
+hanger_simulator
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? subprocess.run([r"C:\Program Files\MiKTeX\miktex\bin\x64\pdflatex.exe", "-out
+put-directory", str(output_dir), str(tex_file)], check=True)
+OK, entering \scrollmode...
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 30.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 30.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.43999pt on input line 30.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.31 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Display math should end with $$.
+<to be read again> 
+                   \tex_par:D 
+l.31 
+     
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+
+! Package amsmath Error: \dot allowed only in math mode.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.32     Q = \dot{m}
+                     \cdot c_p \cdot (T_{out} - T_{in}) \quad \text{(Heat tr...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.32     Q = \dot{m} \cdot
+                           c_p \cdot (T_{out} - T_{in}) \quad \text{(Heat tr...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.34 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 \end{equation}
+                   \n
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! You can't use `\eqno' in vertical mode.
+\veqno ->\@kernel@eqno 
+                       \aftergroup \ignorespaces 
+l.35 \end{equation}
+                   \n
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.35 \end{equation}
+                   \n
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.35 \end{equation}
+                   \n
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Undefined control sequence.
+l.35 \end{equation}\n
+                     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<tp1_plot.png, id=1, 570.933pt x 425.6703pt>
+File: tp1_plot.png Graphic file (type png)
+<use tp1_plot.png>
+Package pdftex.def Info: tp1_plot.png  used on input line 39.
+(pdftex.def)             Requested size: 404.71353pt x 301.75388pt.
+[1
+
+{C:/Users/aloisse/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/al
+oisse/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}{C:/Users/alois
+se/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/mnsymbol/MnSymbolC.enc}{C:/Use
+rs/aloisse/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/mnsymbol/MnSymbolE.enc
+}{C:/Users/aloisse/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/mnsymbol/MnSym
+bolD.enc}]
+! Undefined control sequence.
+l.42 \end{figure}\n
+                   \begin{table}[ht!]
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.47 \hline
+           
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! You can't use `\hrule' here except with leaders.
+\hline ->\noalign {\ifnum 0=`}\fi \hrule 
+                                         \@height \arrayrulewidth \futurelet...
+l.47 \hline
+           
+To put a horizontal rule in an hbox or an alignment,
+you should use \leaders or \hrulefill (see The TeXbook).
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \futurelet 
+l.47 \hline
+           
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \futurelet 
+l.47 \hline
+           
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+! Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.48 5.0 &
+           29.09 & 3170.16 & 15.15 \\
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+! Undefined control sequence.
+l.75 \end{table}\n
+                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[2 <C:/Users/aloisse/Desktop/projet de prog/heat-exchanger-simulator/src/heat_e
+xchanger_simulator/reports/tp1_plot.png>] [3]
+(C:\Users\aloisse\Desktop\projet de prog\heat-exchanger-simulator\src\heat_exch
+anger_simulator\reports\rapport.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 7421 strings out of 474485
+ 108528 string characters out of 5742790
+ 1933542 words of memory out of 5000000
+ 29550 multiletter control sequences out of 15000+600000
+ 628440 words of font info for 136 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 61i,8n,69p,240b,242s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/aloisse/AppData/Local/Programs/MiKTeX/fonts/type1/public/mnsymbol/M
+nSymbol12.pfb><C:/Users/aloisse/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/fourier/fourier-ml.pfb><C:/Users/aloisse/AppData/Local/Programs/MiKTeX/fonts/
+type1/adobe/utopia/putb8a.pfb><C:/Users/aloisse/AppData/Local/Programs/MiKTeX/f
+onts/type1/adobe/utopia/putr8a.pfb><C:/Users/aloisse/AppData/Local/Programs/MiK
+TeX/fonts/type1/adobe/utopia/putri8a.pfb>
+Output written on "C:\Users\aloisse\Desktop\projet de prog\heat-exchanger-simul
+ator\src\heat_exchanger_simulator\reports\rapport.pdf" (3 pages, 102431 bytes).
+
+PDF statistics:
+ 50 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+
