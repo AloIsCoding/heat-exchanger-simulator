@@ -167,7 +167,7 @@ The simulation results show the impact of the varied parameter on the outlet tem
     try:
         subprocess.run([r"C:\Program Files\MiKTeX\miktex\bin\x64\pdflatex.exe", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)], check=False)
     except Exception as e:
-        print(f"Erreur de compilation LaTeX : {e}")
+        print(f"Erreur de compilation LaTeX : {e}\nverifier votre installation MiKTeX")
     
     for ext in [".aux", ".log", ".out"]:
         aux_file = output_dir / f"rapport{ext}"
