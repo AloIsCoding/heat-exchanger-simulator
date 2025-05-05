@@ -67,6 +67,7 @@ class HeatExchangerSimulator:
     def create_main_window(self):
         ttk.Label(self.window, text="Heat Exchanger Simulator", style="Title.TLabel").pack(pady=(50, 10))
         ttk.Label(self.window, text="Choose your TP", style="Subtitle.TLabel").pack(pady=10)
+    
 
         tp_options = [
             "TP1: Flow Impact",
