@@ -11,7 +11,8 @@ class HeatExchangerSimulator:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Heat Exchanger Simulator")
-        self.window.geometry("800x600")
+        self.window.attributes('-fullscreen', True)
+        #self.window.geometry("800x600")
         self.window.configure(bg="#E6ECEF")
 
         style = ttk.Style()
@@ -119,6 +120,7 @@ class HeatExchangerSimulator:
         window = tk.Tk()
         window.title("TP1: Flow Impact")
         window.geometry("800x600")
+        window.attributes('-fullscreen', True)
         window.configure(bg="#E6ECEF")
 
         ttk.Label(window, text="TP1: Flow Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
