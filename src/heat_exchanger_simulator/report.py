@@ -179,3 +179,16 @@ def write_tex(tp_name, results, params):
     Fonction principale pour générer le rapport.
     """
     ecriture_template(tp_name, results, params)
+
+def save_tex():
+    """
+    fonction dont le but est de faire que le rapport s'enregistre au bon endroit
+    """
+    script_path = Path(os.path.abspath(__file__)[:-10] + '/reports_test')
+    print(script_path) 
+    if script_path.exists():
+        pass
+    else:
+        script_path.mkdir()
+    
+print(save_tex())
