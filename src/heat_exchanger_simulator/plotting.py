@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 from pathlib import Path
+import os
 
-def generate_plot(tp_name, results, output_dir="reports"):
+def generate_plot(tp_name, results, output_dir=None):
     """
     Generate and save a plot for the given TP.
 
@@ -13,8 +14,12 @@ def generate_plot(tp_name, results, output_dir="reports"):
     Returns:
         str: Path to the saved plot
     """
+    if output_dir == None:
+        output_dir = os.path.abspath(__file__)[:-11]+"reports"
     output_dir = Path(output_dir)
-    output_dir.mkdir(exist_ok=True)
+    print("output dir, plotting.py",output_dir)
+    if not output_dir.exists():
+        output_dir.mkdir()
     plot_path = output_dir / f"{tp_name.lower()}_plot.png"
 
     plt.figure(figsize=(8, 6), dpi=100)

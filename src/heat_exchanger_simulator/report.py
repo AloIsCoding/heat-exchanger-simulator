@@ -4,8 +4,12 @@ import subprocess
 from pathlib import Path
 import pandas as pd
 from plotting import generate_plot
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
-def ecriture_graphique(file, tp_name, results, plot_path):
+
+
+def ecriture_graphique(file, tp_name, results, plo_path):
     """
     Écrit un graphique dans le fichier LaTeX en utilisant une image PNG générée.
     
@@ -13,13 +17,13 @@ def ecriture_graphique(file, tp_name, results, plot_path):
         file: Fichier LaTeX ouvert
         tp_name (str): Nom du TP (ex. "TP1")
         results (dict): Résultats de la simulation
-        plot_path (str): Chemin vers l’image PNG du graphe
+        plo_path (str): Chemin vers l’image PNG du graphe
     """
     caption = f"Simulation results for {tp_name}"
     label = f"fig:{tp_name.lower()}_results"
     file.write(f'''\\begin{{figure}}[htb!]
         \\centering
-        \\includegraphics[width=0.8\\textwidth]{{{Path(plot_path).name}}}
+        \\includegraphics[width=0.8\\textwidth]{{{Path(plo_path).name}}}
         \\caption{{{caption}}}
         \\label{{{label}}}
 \\end{{figure}}\\n''')
@@ -106,7 +110,7 @@ def ecriture_itemiz(file, params):
     \\item Pipe Diameter: {params.get('pipe_diameter', '')} m
 \\end{{itemize}}\\n''')
 
-def ecriture_template(tp_name, results, params):
+def ecriture_template(tp_name, results, params,dir):
     """
     Écrit le template LaTeX complet avec tous les éléments.
     
@@ -115,11 +119,13 @@ def ecriture_template(tp_name, results, params):
         results (dict): Résultats de la simulation
         params (dict): Paramètres de la simulation
     """
-    output_dir = Path("reports")
-    output_dir.mkdir(exist_ok=True)
+    output_dir = Path(str(dir)) / 'reports'
+    if not output_dir.exists:
+        output_dir.mkdir(exist_ok=True)
     tex_file = output_dir / "rapport.tex"
-    
-    plot_path = generate_plot(tp_name, results, output_dir)
+    print("tex_file report.py",tex_file)
+    print("output dir report.py",output_dir)
+    plo_path = generate_plot(tp_name, results, output_dir)
     
     title = f"Heat Exchanger Simulation Report: {tp_name}"
     author = "User"
@@ -155,7 +161,7 @@ The simulation uses the following heat transfer equations:
         file.write(f'''
 \\section{{Results and Discussion}}
 ''')
-        ecriture_graphique(file, tp_name, results, plot_path)
+        ecriture_graphique(file, tp_name, results, plo_path)
         ecriture_table(file, tp_name, results)
         
         file.write(f'''
@@ -175,21 +181,34 @@ The simulation results show the impact of the varied parameter on the outlet tem
         if aux_file.exists():
             aux_file.unlink()
 
-def write_tex(tp_name, results, params):
-    """
-    Fonction principale pour générer le rapport.
-    """
-    ecriture_template(tp_name, results, params)
+# def write_tex(tp_name, results, params):
+#     """
+#     Fonction principale pour générer le rapport.
+#     """
+#     save_as(tp_name, results, params)
 
-def save_tex():
-    """
-    fonction dont le but est de faire que le rapport s'enregistre au bon endroit
-    """
-    script_path = Path(os.path.abspath(__file__)[:-10] + '/reports_test')
-    print(script_path) 
-    if script_path.exists():
-        pass
+
+def write_tex(tp_name,results,params):
+    # Fenêtre de sélection d'emplacement
+    filepath = filedialog.asksaveasfilename(
+        defaultextension=".tex",
+        filetypes=[("Fichier LaTeX", "*.tex"), ("Tous les fichiers", "*.*")],
+        title="Enregistrer le rapport sous..."
+    )
+    print(filepath)
+    name = str(filepath).split("\\")[-1:][0].split(".tex")[0]
+    elem_dos_path = str(filepath).split("/")[:-1] #parce que c'est noté avec des / 
+    str_dos_path =''
+    for elem in elem_dos_path:
+        str_dos_path += elem + "\\"
+    dos_path = Path(str_dos_path[:-1])
+    print(dos_path)
+
+    if filepath:  # Si l'utilisateur ne clique pas sur Annuler
+        ecriture_template(tp_name,results,params,dos_path)
+        messagebox.showinfo("Succès", f"Rapport enregistré à :\n{filepath}")
     else:
-        script_path.mkdir()
-    
-print(save_tex())
+        messagebox.showerror("error")
+
+# faire en sorte d'avoir un fichier du nom de l'enregistrement !!
+# et faire en sorte que le miktex fonctionne (ou le supprimer) et en suite on est bon normalement pour le doss

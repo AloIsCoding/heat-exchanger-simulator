@@ -11,8 +11,7 @@ class HeatExchangerSimulator:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title("Heat Exchanger Simulator")
-        self.window.attributes('-fullscreen', True)
-        #self.window.geometry("800x600")
+        self.window.geometry("800x600")
         self.window.configure(bg="#E6ECEF")
 
         style = ttk.Style()
@@ -68,7 +67,6 @@ class HeatExchangerSimulator:
     def create_main_window(self):
         ttk.Label(self.window, text="Heat Exchanger Simulator", style="Title.TLabel").pack(pady=(50, 10))
         ttk.Label(self.window, text="Choose your TP", style="Subtitle.TLabel").pack(pady=10)
-    
 
         tp_options = [
             "TP1: Flow Impact",
@@ -120,7 +118,6 @@ class HeatExchangerSimulator:
         window = tk.Tk()
         window.title("TP1: Flow Impact")
         window.geometry("800x600")
-        window.attributes('-fullscreen', True)
         window.configure(bg="#E6ECEF")
 
         ttk.Label(window, text="TP1: Flow Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
@@ -140,8 +137,8 @@ class HeatExchangerSimulator:
         diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
 
-        canvas = tk.Canvas(window, width=400, height=300, bg="white")
-        canvas.pack(pady=10)
+        # canvas = tk.Canvas(window, width=400, height=300, bg="white")
+        # canvas.pack(pady=10)
         params = {
             "T_cold_in": t_cold_in_entry.get(),
             "hot_fluid": hot_fluid_var.get(),
@@ -150,7 +147,7 @@ class HeatExchangerSimulator:
             "length": length_entry.get(),
             "diameter": diameter_entry.get()
         }
-        self.draw_exchanger(canvas, params)
+        # self.draw_exchanger(canvas, params)
 
         progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
         progress_bar.pack(pady=10)
@@ -202,7 +199,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -296,7 +293,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -381,7 +378,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -477,7 +474,7 @@ class HeatExchangerSimulator:
                     "T_hot_in": t_hot_in_entry.get(),
                     "dimension_type": dim_type_var.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
