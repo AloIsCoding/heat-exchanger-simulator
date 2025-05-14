@@ -93,14 +93,23 @@ class HeatExchangerSimulator:
 
     def draw_exchanger(self, canvas, params):
         canvas.delete("all")
-        canvas.create_rectangle(100, 100, 300, 200, outline="black", width=2)
-        canvas.create_line(50, 150, 100, 150, arrow=tk.LAST)
-        canvas.create_line(300, 150, 350, 150, arrow=tk.LAST)
-        canvas.create_line(350, 120, 100, 120, arrow=tk.LAST)
-        canvas.create_text(50, 130, text=f"T_in: {params.get('T_cold_in', '')}°C", anchor="e")
-        canvas.create_text(350, 130, text=f"T_out: ?", anchor="w")
-        canvas.create_text(200, 80, text=f"Hot Fluid: {params.get('hot_fluid', '')}, T_hot: {params.get('T_hot_in', '')}°C")
-        canvas.create_text(200, 220, text=f"Pipe: {params.get('material', '')}, L={params.get('length', '')}m, D={params.get('diameter', '')}m")
+        try:
+            img_path = os.path.join(os.path.dirname(__file__), "exchanger.png")
+            img = Image.open(img_path)
+            img = img.resize((400, 300), Image.Resampling.LANCZOS)
+            canvas.image = ImageTk.PhotoImage(img)
+            canvas.create_image(200, 150, image=canvas.image)
+        except Exception as e:
+            print(f"Erreur de chargement de l'image : {e}")
+            # Dessin de secours (identique à l'original)
+            canvas.create_rectangle(100, 100, 300, 200, outline="black", width=2)
+            canvas.create_line(50, 150, 100, 150, arrow=tk.LAST)
+            canvas.create_line(300, 150, 350, 150, arrow=tk.LAST)
+            canvas.create_line(350, 120, 100, 120, arrow=tk.LAST)
+            canvas.create_text(50, 130, text=f"T_in: {params.get('T_cold_in', '')}°C", anchor="e")
+            canvas.create_text(350, 130, text=f"T_out: ?", anchor="w")
+            canvas.create_text(200, 80, text=f"Hot Fluid: {params.get('hot_fluid', '')}, T_hot: {params.get('T_hot_in', '')}°C")
+            canvas.create_text(200, 220, text=f"Pipe: {params.get('material', '')}, L={params.get('length', '')}m, D={params.get('diameter', '')}m")
 
     def run_simulation(self, progress_bar, callback):
         progress = 0
@@ -137,8 +146,8 @@ class HeatExchangerSimulator:
         diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
 
-        # canvas = tk.Canvas(window, width=400, height=300, bg="white")
-        # canvas.pack(pady=10)
+        canvas = tk.Canvas(window, width=400, height=300, bg="white")
+        canvas.pack(pady=10)
         params = {
             "T_cold_in": t_cold_in_entry.get(),
             "hot_fluid": hot_fluid_var.get(),
@@ -147,7 +156,7 @@ class HeatExchangerSimulator:
             "length": length_entry.get(),
             "diameter": diameter_entry.get()
         }
-        # self.draw_exchanger(canvas, params)
+        self.draw_exchanger(canvas, params)
 
         progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
         progress_bar.pack(pady=10)
@@ -199,7 +208,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -293,7 +302,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -378,7 +387,7 @@ class HeatExchangerSimulator:
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -474,7 +483,7 @@ class HeatExchangerSimulator:
                     "T_hot_in": t_hot_in_entry.get(),
                     "dimension_type": dim_type_var.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
