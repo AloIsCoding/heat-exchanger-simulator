@@ -7,8 +7,6 @@ from plotting import generate_plot
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
-
-
 def ecriture_graphique(file, tp_name, results, plo_path):
     """
     Écrit un graphique dans le fichier LaTeX en utilisant une image PNG générée.
@@ -97,20 +95,23 @@ def ecriture_equation(file, tp_name):
 
 def ecriture_itemiz(file, params):
     """
-    Écrit une liste des paramètres dans une liste itemize.
+    Écrit une liste des paramètres dans une liste itemize, incluant U et Re.
     """
     file.write(f'''\\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
-    \\item Cold Fluid: {params.get('fluid', '')}
-    \\item Hot Fluid: {params.get('hot_fluid', '')}
-    \\item Material: {params.get('material', '')}
-    \\item Cold Inlet Temperature: {params.get('T_cold_in', '')}°C
-    \\item Hot Inlet Temperature: {params.get('T_hot_in', '')}°C
-    \\item Pipe Length: {params.get('pipe_length', '')} m
-    \\item Pipe Diameter: {params.get('pipe_diameter', '')} m
+    \\item Cold Fluid: {params.get('fluid', 'N/A')}
+    \\item Hot Fluid: {params.get('hot_fluid', 'N/A')}
+    \\item Material: {params.get('material', 'N/A')}
+    \\item Cold Inlet Temperature: {params.get('T_cold_in', 'N/A')}°C
+    \\item Hot Inlet Temperature: {params.get('T_hot_in', 'N/A')}°C
+    \\item Pipe Length: {params.get('pipe_length', 'N/A')} m
+    \\item Pipe Diameter: {params.get('pipe_diameter', 'N/A')} m
+    \\item Overall Heat Transfer Coefficient (U): {params.get('U', ['N/A'])[0]} W/m²·K
+    \\item Internal Reynolds Number: {params.get('Re_internal', ['N/A'])[0]} ({params.get('Re_internal_regime', ['Unknown'])[0]})
+    \\item External Reynolds Number: {params.get('Re_external', ['N/A'])[0]} ({params.get('Re_external_regime', ['Unknown'])[0]})
 \\end{{itemize}}\\n''')
 
-def ecriture_template(tp_name, results, params,dir):
+def ecriture_template(tp_name, results, params, output_dir, base_filename):
     """
     Écrit le template LaTeX complet avec tous les éléments.
     
@@ -118,17 +119,16 @@ def ecriture_template(tp_name, results, params,dir):
         tp_name (str): Nom du TP
         results (dict): Résultats de la simulation
         params (dict): Paramètres de la simulation
+        output_dir (Path): Dossier de sortie
+        base_filename (str): Nom de base pour les fichiers (sans extension)
     """
-    output_dir = Path(str(dir)) / 'reports'
-    if not output_dir.exists:
-        output_dir.mkdir(exist_ok=True)
-    tex_file = output_dir / "rapport.tex"
-    print("tex_file report.py",tex_file)
-    print("output dir report.py",output_dir)
+    output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
+    tex_file = output_dir / f"{base_filename}.tex"
     plo_path = generate_plot(tp_name, results, output_dir)
     
     title = f"Heat Exchanger Simulation Report: {tp_name}"
-    author = "User"
+    author = params.get("author", "User")
     date = time.strftime("%d.%m.%Y")
     
     with open(tex_file, "w", encoding="utf-8") as file:
@@ -136,6 +136,7 @@ def ecriture_template(tp_name, results, params,dir):
 \\usepackage[a4paper, total={{7in, 8in}}]{{geometry}}
 \\usepackage{{graphicx,amssymb,dsfont,fourier,xcolor,amsmath,ulem,filecontents,MnSymbol,wasysym}}
 \\usepackage[utf8]{{inputenc}}
+\\graphicspath{{{{{output_dir.as_posix()}/}}}} % Chemin pour les images
 
 \\title{{{title}}}
 \\author{{{author}}}
@@ -150,8 +151,7 @@ This report presents the results of the {tp_name} simulation for a heat exchange
 
 \\section{{Experimental Parameters}}
 ''')
-        ecriture_itemiz(file, params)
-        
+        ecriture_itemiz(file, results)  # Passer results pour avoir U, Re
         file.write(f'''
 \\section{{Methodology}}
 The simulation uses the following heat transfer equations:
@@ -172,43 +172,48 @@ The simulation results show the impact of the varied parameter on the outlet tem
 ''')
     
     try:
-        subprocess.run([r"C:\Program Files\MiKTeX\miktex\bin\x64\pdflatex.exe", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)], check=False)
-    except Exception as e:
-        print(f"Erreur de compilation LaTeX : {e}\nverifier votre installation MiKTeX")
-    
-    for ext in [".aux", ".log", ".out"]:
-        aux_file = output_dir / f"rapport{ext}"
-        if aux_file.exists():
-            aux_file.unlink()
+        # Utiliser pdflatex générique (doit être dans le PATH)
+        result = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)], capture_output=True, text=True)
+        pdf_file = output_dir / f"{base_filename}.pdf"
+        if not pdf_file.exists():
+            messagebox.showerror("Erreur", f"Échec de la compilation LaTeX :\n{result.stderr}")
+            return None
+        return str(pdf_file), str(tex_file), str(plo_path)
+    except FileNotFoundError:
+        messagebox.showerror("Erreur", "MiKTeX (pdflatex) n'est pas installé ou n'est pas dans le PATH.\nVérifiez votre installation MiKTeX.")
+        return None
+    finally:
+        # Nettoyer les fichiers auxiliaires, y compris .toc
+        for ext in [".aux", ".log", ".out", ".toc"]:
+            aux_file = output_dir / f"{base_filename}{ext}"
+            if aux_file.exists():
+                aux_file.unlink()
 
-# def write_tex(tp_name, results, params):
-#     """
-#     Fonction principale pour générer le rapport.
-#     """
-#     save_as(tp_name, results, params)
-
-
-def write_tex(tp_name,results,params):
+def write_tex(tp_name, results, params):
+    """
+    Fonction principale pour générer le rapport PDF, LaTeX et PNG dans un dossier.
+    """
     # Fenêtre de sélection d'emplacement
-    filepath = filedialog.asksaveasfilename(
-        defaultextension=".tex",
-        filetypes=[("Fichier LaTeX", "*.tex"), ("Tous les fichiers", "*.*")],
-        title="Enregistrer le rapport sous..."
+    folder_path = filedialog.askdirectory(
+        title="Choisir un dossier pour sauvegarder le rapport"
     )
-    print(filepath)
-    name = str(filepath).split("\\")[-1:][0].split(".tex")[0]
-    elem_dos_path = str(filepath).split("/")[:-1] #parce que c'est noté avec des / 
-    str_dos_path =''
-    for elem in elem_dos_path:
-        str_dos_path += elem + "\\"
-    dos_path = Path(str_dos_path[:-1])
-    print(dos_path)
+    if not folder_path:
+        messagebox.showwarning("Annulé", "Génération du rapport annulée.")
+        return
 
-    if filepath:  # Si l'utilisateur ne clique pas sur Annuler
-        ecriture_template(tp_name,results,params,dos_path)
-        messagebox.showinfo("Succès", f"Rapport enregistré à :\n{filepath}")
-    else:
-        messagebox.showerror("error")
+    # Créer un nom de dossier basé sur la date
+    base_name = f"rapport_{tp_name.lower()}_{time.strftime('%Y%m%d')}"
+    output_dir = Path(folder_path) / base_name
+    counter = 1
+    while output_dir.exists():
+        output_dir = Path(folder_path) / f"{base_name}_{counter}"
+        counter += 1
 
-# faire en sorte d'avoir un fichier du nom de l'enregistrement !!
-# et faire en sorte que le miktex fonctionne (ou le supprimer) et en suite on est bon normalement pour le doss
+    # Générer le rapport
+    result = ecriture_template(tp_name, results, params, output_dir, f"rapport_{tp_name.lower()}")
+    if result:
+        pdf_path, tex_path, png_path = result
+        messagebox.showinfo("Succès", f"Rapport généré dans : {output_dir}\n"
+                                     f"- PDF : {pdf_path}\n"
+                                     f"- LaTeX : {tex_path}\n"
+                                     f"- Graphique : {png_path}")
