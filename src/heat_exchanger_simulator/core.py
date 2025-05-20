@@ -32,7 +32,7 @@ def calculate_conduction_resistance(pipe_properties, k):
 
 def calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out):
     """
-    Calculate logarithmic mean temperature difference (ΔT_lm).
+    Calculate logarithmic mean temperature difference (delta_T_lm).
     """
     dT1 = T_hot_in - T_cold_out
     dT2 = T_hot_out - T_cold_in
@@ -157,8 +157,8 @@ def simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, fl
         T_hot_out = T_hot_in - 10
         T_cold_out_guess = T_cold_in + 10
         for _ in range(5):
-            ΔT_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
-            Q = U * A * ΔT_lm
+            delta_T_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
+            Q = U * A * delta_T_lm
             T_cold_out_guess = T_cold_in + Q / (m_dot_cold * Cp_cold)
         T_outs.append(T_cold_out_guess)
         Qs.append(Q)
@@ -222,8 +222,8 @@ def simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, 
         T_hot_out = T_hot_in - 10
         T_cold_out_guess = T_cold_in + 10
         for _ in range(5):
-            ΔT_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
-            Q = U * A * ΔT_lm
+            delta_T_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
+            Q = U * A * delta_T_lm
             T_cold_out_guess = T_cold_in + Q / (m_dot_cold * Cp_cold)
         T_outs.append(T_cold_out_guess)
         Qs.append(Q)
@@ -290,8 +290,8 @@ def simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties,gap=0.01)
         T_hot_out = T_hot_in - 10
         T_cold_out_guess = T_cold_in + 10
         for _ in range(5):
-            ΔT_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
-            Q = U * A * ΔT_lm
+            delta_T_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
+            Q = U * A * delta_T_lm
             T_cold_out_guess = T_cold_in + Q / (m_dot_cold * Cp_cold)
         T_outs.append(T_cold_out_guess)
         Qs.append(Q)
@@ -360,8 +360,8 @@ def simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_h
         T_hot_out = T_hot_in - 10
         T_cold_out_guess = T_cold_in + 10
         for _ in range(5):
-            ΔT_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
-            Q = U * A * ΔT_lm
+            delta_T_lm = calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out_guess)
+            Q = U * A * delta_T_lm
             T_cold_out_guess = T_cold_in + Q / (m_dot_cold * Cp_cold)
         T_outs.append(T_cold_out_guess)
         Qs.append(Q)
