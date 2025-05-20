@@ -18,8 +18,8 @@ It also generates **professional lab reports** in PDF format for analysis.
 ## 👥 Authors
 
 - Robin Elkaim – BSc in Chemistry and Chemical Engineering, EPFL  
-- Roméo Bedague – BSc in Chemistry and Chemical Engineering, EPFL  
 - Aloïsse Dantant-Cochet – BSc in Chemistry and Chemical Engineering, EPFL
+- Roméo Bedague – BSc in Chemistry and Chemical Engineering, EPFL  
 
 ---
 
@@ -51,7 +51,7 @@ The simulator supports four practical sessions (TPs) to study the impact of:
 
 1. **Clone the repository**  
 ```bash
-git clone https://github.com/your-repo/heat-exchanger-simulator.git
+git clone https://github.com/aloiscoding/heat-exchanger-simulator
 ```
 
 2. **Navigate to the project directory**  
@@ -74,7 +74,7 @@ pip install -r requirements.txt
   - `matplotlib`
   - `pandas`
   - `pillow`
-- **LaTeX distribution** (e.g., MiKTeX or TeX Live) for PDF generation
+- **LaTeX distribution** (e.g., MiKTeX) for PDF generation
 - Optional: image files for the GUI:
   - `epfl_logo.png`
   - `exchanger.png`
@@ -86,7 +86,7 @@ pip install -r requirements.txt
 To launch the simulator:
 
 ```bash
-python src/heat_exchanger_simulator/interface.py
+python src/heat_exchanger_simulator/main.py
 ```
 
 ### From the GUI:
@@ -113,6 +113,7 @@ heat-exchanger-simulator/
 │       ├── interface.py     # GUI with Tkinter
 │       ├── simulation.py    # Animations (to be implemented)
 │       ├── report.py        # PDF report generation
+│       ├── main.py          # main program for lunching the app
 ├── notebooks/
 │   └── exploration.ipynb    # Pedagogical example
 ├── tests/
