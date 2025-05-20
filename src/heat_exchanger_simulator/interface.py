@@ -9,9 +9,11 @@ from plotting import generate_plot
 
 class HeatExchangerSimulator:
     def __init__(self):
+        self.dim_x = 1000
+        self.dim_y = 750
         self.window = tk.Tk()
         self.window.title("Heat Exchanger Simulator")
-        self.window.geometry("800x600")
+        self.window.geometry(f"{self.dim_x}x{self.dim_y}")
         self.window.configure(bg="#E6ECEF")
 
         style = ttk.Style()
@@ -65,6 +67,8 @@ class HeatExchangerSimulator:
         return entry
 
     def create_main_window(self):
+        for widget in self.window.winfo_children():
+            widget.destroy()
         ttk.Label(self.window, text="Heat Exchanger Simulator", style="Title.TLabel").pack(pady=(50, 10))
         ttk.Label(self.window, text="Choose your TP", style="Subtitle.TLabel").pack(pady=10)
 
@@ -81,7 +85,9 @@ class HeatExchangerSimulator:
 
     def continue_action(self):
         selected_tp = self.tp_var.get()
-        self.window.destroy()
+        for elem in self.window.winfo_children():
+            elem.destroy()
+        # self.window.destroy()
         if selected_tp == "TP1: Flow Impact":
             self.tp1_interface()
         elif selected_tp == "TP2: Temperature Impact":
@@ -92,6 +98,7 @@ class HeatExchangerSimulator:
             self.tp4_interface()
 
     def draw_exchanger(self, canvas, params):
+        
         canvas.delete("all")
         try:
             img_path = os.path.join(os.path.dirname(__file__), "exchanger.png")
@@ -123,17 +130,17 @@ class HeatExchangerSimulator:
                 callback()
         update_progress()
 
-    def tp1_interface(self):
-        window = tk.Tk()
-        window.title("TP1: Flow Impact")
-        window.geometry("800x600")
-        window.configure(bg="#E6ECEF")
+    def tp1_interface(self): # TODO : réarangé les canvas et les frames pour que ca fonctionne en grand ecrans
+        self.window.title("TP1: Flow Impact")
+        self.window.geometry(f"{self.dim_x}x{self.dim_y}")
+        self.window.configure(bg="#E6ECEF")
 
-        ttk.Label(window, text="TP1: Flow Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
-        ttk.Label(window, text="Study the impact of cold fluid flow rate on outlet temperature.", wraplength=600).pack(pady=10)
+        ttk.Label(self.window, text="TP1: Flow Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
+        ttk.Label(self.window, text="Study the impact of cold fluid flow rate on outlet temperature.", wraplength=600).pack(pady=10)
 
-        params_frame = ttk.Frame(window)
-        params_frame.pack(pady=10, padx=20, fill="both")
+        #creation de la partie rentrer les données a gauche
+        params_frame = ttk.Frame(self.window)
+        params_frame.pack(side='left',pady=20, fill="both")
         fluid_var = self.create_dropdown(params_frame, "Cold Fluid:", specific_heat_capacity.keys(), "water")
         hot_fluid_var = self.create_dropdown(params_frame, "Hot Fluid:", specific_heat_capacity.keys(), "water")
         material_var = self.create_dropdown(params_frame, "Material:", thermal_conductivity.keys(), "stainless steel")
@@ -145,24 +152,29 @@ class HeatExchangerSimulator:
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
         diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
+        gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
-        canvas = tk.Canvas(window, width=400, height=300, bg="white")
-        canvas.pack(pady=10)
+        #partie creation de l'image avec la partie centrale 
+        canvas = tk.Canvas(self.window, width=400, height=300, bg="white")
+        canvas.pack(side="left",fill='both')
         params = {
             "T_cold_in": t_cold_in_entry.get(),
             "hot_fluid": hot_fluid_var.get(),
             "T_hot_in": t_hot_in_entry.get(),
             "material": material_var.get(),
             "length": length_entry.get(),
-            "diameter": diameter_entry.get()
+            "diameter": diameter_entry.get(),
+            "gap" : gap_entry.get()
         }
         self.draw_exchanger(canvas, params)
 
-        progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
-        progress_bar.pack(pady=10)
 
-        button_frame = ttk.Frame(window)
-        button_frame.pack(pady=10)
+        #creation de la partie a droite avec la progresse bar et les boutons
+        button_frame = ttk.Frame(self.window)
+        button_frame.pack(side='left',pady=10)
+        #frame de la progressebar
+        progress_bar = ttk.Progressbar(button_frame, length=300, mode="determinate")
+        progress_bar.pack(pady=30)
         results = {}
 
         def run_sim():
@@ -178,11 +190,12 @@ class HeatExchangerSimulator:
                 length = float(length_entry.get())
                 diameter = float(diameter_entry.get())
                 thickness = float(thickness_entry.get())
+                gap = float(gap_entry.get())
                 pipe_properties = {"outer_diameter": diameter, "thickness": thickness, "length": length}
                 
                 def callback():
                     nonlocal results
-                    results = simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, flow_end, flow_steps, pipe_properties)
+                    results = simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, flow_end, flow_steps, pipe_properties,gap)
                     plot_path = generate_plot("TP1", results)
                     img = Image.open(plot_path)
                     img = img.resize((600, 400), Image.Resampling.LANCZOS)
@@ -206,27 +219,26 @@ class HeatExchangerSimulator:
                     "T_cold_in": t_cold_in_entry.get(),
                     "T_hot_in": t_hot_in_entry.get(),
                     "pipe_length": length_entry.get(),
-                    "pipe_diameter": diameter_entry.get()
+                    "pipe_diameter": diameter_entry.get(),
+                    "gap" : gap_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
-        ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(pady=20)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
-        download_button.pack(side="left", padx=5)
-        ttk.Button(button_frame, text="Another TP", command=lambda: [window.destroy(), self.create_main_window()]).pack(side="left", padx=5)
-
-        window.mainloop()
+        download_button.pack(pady=20)
+        ttk.Button(button_frame, text="Another TP", command=lambda : self.create_main_window()).pack(pady=20)
+        self.window.mainloop()
 
     def tp2_interface(self):
-        window = tk.Tk()
-        window.title("TP2: Temperature Impact")
-        window.geometry("800x600")
-        window.configure(bg="#E6ECEF")
+        self.window.title("TP2: Temperature Impact")
+        self.window.geometry(f"{self.dim_x}x{self.dim_y}")
+        self.window.configure(bg="#E6ECEF")
 
-        ttk.Label(window, text="TP2: Temperature Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
-        ttk.Label(window, text="Study the impact of hot fluid temperature on outlet temperature.", wraplength=600).pack(pady=10)
+        ttk.Label(self.window, text="TP2: Temperature Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
+        ttk.Label(self.window, text="Study the impact of hot fluid temperature on outlet temperature.", wraplength=600).pack(pady=10)
 
-        params_frame = ttk.Frame(window)
+        params_frame = ttk.Frame(self.window)
         params_frame.pack(pady=10, padx=20, fill="both")
         fluid_var = self.create_dropdown(params_frame, "Cold Fluid:", specific_heat_capacity.keys(), "water")
         hot_fluid_var = self.create_dropdown(params_frame, "Hot Fluid:", specific_heat_capacity.keys(), "water")
@@ -239,8 +251,9 @@ class HeatExchangerSimulator:
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
         diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
+        gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
-        canvas = tk.Canvas(window, width=400, height=300, bg="white")
+        canvas = tk.Canvas(self.window, width=400, height=300, bg="white")
         canvas.pack(pady=10)
         params = {
             "T_cold_in": t_cold_in_entry.get(),
@@ -248,14 +261,15 @@ class HeatExchangerSimulator:
             "T_hot_in": t_hot_start_entry.get(),
             "material": material_var.get(),
             "length": length_entry.get(),
-            "diameter": diameter_entry.get()
+            "diameter": diameter_entry.get(),
+            "gap" : gap_entry.get()
         }
         self.draw_exchanger(canvas, params)
 
-        progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
+        progress_bar = ttk.Progressbar(self.window, length=300, mode="determinate")
         progress_bar.pack(pady=10)
 
-        button_frame = ttk.Frame(window)
+        button_frame = ttk.Frame(self.window)
         button_frame.pack(pady=10)
         results = {}
 
@@ -272,11 +286,12 @@ class HeatExchangerSimulator:
                 length = float(length_entry.get())
                 diameter = float(diameter_entry.get())
                 thickness = float(thickness_entry.get())
+                gap = float(gap_entry.get())
                 pipe_properties = {"outer_diameter": diameter, "thickness": thickness, "length": length}
                 
                 def callback():
                     nonlocal results
-                    results = simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, T_hot_end, T_hot_steps, pipe_properties)
+                    results = simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, T_hot_end, T_hot_steps, pipe_properties,gap)
                     plot_path = generate_plot("TP2", results)
                     img = Image.open(plot_path)
                     img = img.resize((600, 400), Image.Resampling.LANCZOS)
@@ -300,27 +315,27 @@ class HeatExchangerSimulator:
                     "T_cold_in": t_cold_in_entry.get(),
                     "flow_cold": flow_cold_entry.get(),
                     "pipe_length": length_entry.get(),
-                    "pipe_diameter": diameter_entry.get()
+                    "pipe_diameter": diameter_entry.get(),
+                    "gap" : gap_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
         download_button.pack(side="left", padx=5)
-        ttk.Button(button_frame, text="Another TP", command=lambda: [window.destroy(), self.create_main_window()]).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Another TP", command=lambda : self.create_main_window()).pack(side="left", padx=5)
 
-        window.mainloop()
+        self.window.mainloop()
 
     def tp3_interface(self):
-        window = tk.Tk()
-        window.title("TP3: Different Fluids Impact")
-        window.geometry("800x600")
-        window.configure(bg="#E6ECEF")
+        self.window.title("TP3: Different Fluids Impact")
+        self.window.geometry(f"{self.dim_x}x{self.dim_y}")
+        self.window.configure(bg="#E6ECEF")
 
-        ttk.Label(window, text="TP3: Different Fluids Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
-        ttk.Label(window, text="Study the impact of hot fluid choice on outlet temperature.", wraplength=600).pack(pady=10)
+        ttk.Label(self.window, text="TP3: Different Fluids Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
+        ttk.Label(self.window, text="Study the impact of hot fluid choice on outlet temperature.", wraplength=600).pack(pady=10)
 
-        params_frame = ttk.Frame(window)
+        params_frame = ttk.Frame(self.window)
         params_frame.pack(pady=10, padx=20, fill="both")
         fluid_var = self.create_dropdown(params_frame, "Cold Fluid:", specific_heat_capacity.keys(), "water")
         material_var = self.create_dropdown(params_frame, "Material:", thermal_conductivity.keys(), "stainless steel")
@@ -329,8 +344,9 @@ class HeatExchangerSimulator:
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
         diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
+        gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
-        canvas = tk.Canvas(window, width=400, height=300, bg="white")
+        canvas = tk.Canvas(self.window, width=400, height=300, bg="white")
         canvas.pack(pady=10)
         params = {
             "T_cold_in": "20",
@@ -338,14 +354,15 @@ class HeatExchangerSimulator:
             "T_hot_in": "80",
             "material": material_var.get(),
             "length": length_entry.get(),
-            "diameter": diameter_entry.get()
+            "diameter": diameter_entry.get(),
+            "gap" : gap_entry.get()
         }
         self.draw_exchanger(canvas, params)
 
-        progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
+        progress_bar = ttk.Progressbar(self.window, length=300, mode="determinate")
         progress_bar.pack(pady=10)
 
-        button_frame = ttk.Frame(window)
+        button_frame = ttk.Frame(self.window)
         button_frame.pack(pady=10)
         results = {}
 
@@ -362,7 +379,7 @@ class HeatExchangerSimulator:
                 
                 def callback():
                     nonlocal results
-                    results = simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties)
+                    results = simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties,float(gap_entry.get()))
                     plot_path = generate_plot("TP3", results)
                     img = Image.open(plot_path)
                     img = img.resize((600, 400), Image.Resampling.LANCZOS)
@@ -385,27 +402,27 @@ class HeatExchangerSimulator:
                     "flow_cold": flow_cold_entry.get(),
                     "flow_hot": flow_hot_entry.get(),
                     "pipe_length": length_entry.get(),
-                    "pipe_diameter": diameter_entry.get()
+                    "pipe_diameter": diameter_entry.get(),
+                    "gap" : gap_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
         download_button.pack(side="left", padx=5)
-        ttk.Button(button_frame, text="Another TP", command=lambda: [window.destroy(), self.create_main_window()]).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Another TP", command=lambda : self.create_main_window()).pack(side="left", padx=5)
 
-        window.mainloop()
+        self.window.mainloop()
 
     def tp4_interface(self):
-        window = tk.Tk()
-        window.title("TP4: Length and Diameter Impact")
-        window.geometry("800x600")
-        window.configure(bg="#E6ECEF")
+        self.window.title("TP4: Length and Diameter Impact")
+        self.window.geometry(f"{self.dim_x}x{self.dim_y}")
+        self.window.configure(bg="#E6ECEF")
 
-        ttk.Label(window, text="TP4: Length and Diameter Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
-        ttk.Label(window, text="Study the impact of pipe dimensions on outlet temperature.", wraplength=600).pack(pady=10)
+        ttk.Label(self.window, text="TP4: Length and Diameter Impact", font=("Segoe UI", 18, "bold"), foreground="#ED1B2F").pack(pady=10)
+        ttk.Label(self.window, text="Study the impact of pipe dimensions on outlet temperature.", wraplength=600).pack(pady=10)
 
-        params_frame = ttk.Frame(window)
+        params_frame = ttk.Frame(self.window)
         params_frame.pack(pady=10, padx=20, fill="both")
         fluid_var = self.create_dropdown(params_frame, "Cold Fluid:", specific_heat_capacity.keys(), "water")
         hot_fluid_var = self.create_dropdown(params_frame, "Hot Fluid:", specific_heat_capacity.keys(), "water")
@@ -419,8 +436,9 @@ class HeatExchangerSimulator:
         dim_end_entry = self.create_entry(params_frame, "End Dimension (m):", "5")
         dim_steps_entry = self.create_entry(params_frame, "Dimension Steps:", "20")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
+        gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
-        canvas = tk.Canvas(window, width=400, height=300, bg="white")
+        canvas = tk.Canvas(self.window, width=400, height=300, bg="white")
         canvas.pack(pady=10)
         params = {
             "T_cold_in": t_cold_in_entry.get(),
@@ -428,14 +446,15 @@ class HeatExchangerSimulator:
             "T_hot_in": t_hot_in_entry.get(),
             "material": material_var.get(),
             "length": "Varies" if dim_type_var.get() == "length" else "2",
-            "diameter": "Varies" if dim_type_var.get() == "diameter" else "0.1"
+            "diameter": "Varies" if dim_type_var.get() == "diameter" else "0.1",
+            "gap" : gap_entry.get()
         }
         self.draw_exchanger(canvas, params)
 
-        progress_bar = ttk.Progressbar(window, length=300, mode="determinate")
+        progress_bar = ttk.Progressbar(self.window, length=300, mode="determinate")
         progress_bar.pack(pady=10)
 
-        button_frame = ttk.Frame(window)
+        button_frame = ttk.Frame(self.window)
         button_frame.pack(pady=10)
         results = {}
 
@@ -456,7 +475,7 @@ class HeatExchangerSimulator:
                 
                 def callback():
                     nonlocal results
-                    results = simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_hot_in, dim_type, dim_start, dim_end, dim_steps)
+                    results = simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_hot_in, dim_type, dim_start, dim_end, dim_steps,float(gap_entry.get()))
                     plot_path = generate_plot("TP4", results)
                     img = Image.open(plot_path)
                     img = img.resize((600, 400), Image.Resampling.LANCZOS)
@@ -481,14 +500,14 @@ class HeatExchangerSimulator:
                     "flow_hot": flow_hot_entry.get(),
                     "T_cold_in": t_cold_in_entry.get(),
                     "T_hot_in": t_hot_in_entry.get(),
-                    "dimension_type": dim_type_var.get()
+                    "dimension_type": dim_type_var.get(),
+                    "gap" : gap_entry.get()
                 })
-                messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(side="left", padx=5)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
         download_button.pack(side="left", padx=5)
-        ttk.Button(button_frame, text="Another TP", command=lambda: [window.destroy(), self.create_main_window()]).pack(side="left", padx=5)
+        ttk.Button(button_frame, text="Another TP", command=lambda : self.create_main_window()).pack(side="left", padx=5)
 
-        window.mainloop()
-
+        self.window.mainloop()

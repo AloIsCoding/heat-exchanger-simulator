@@ -115,7 +115,7 @@ def calculate_overall_heat_transfer_coefficient(pipe, material, h_internal, h_ex
     U = 1 / (2 * math.pi * length * ro * total_resistance)
     return U
 
-def simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, flow_end, flow_steps, pipe_properties):
+def simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, flow_end, flow_steps, pipe_properties,gap=0.01):
     """
     Simulate TP1: Impact of cold fluid flow rate on outlet temperature.
     """
@@ -137,7 +137,7 @@ def simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, fl
     m_dot_hot = (10 * hot_fluid_density) / 60  # Fixed hot flow rate: 10 L/min
 
     external_pipe = {
-        "inter_diameter": pipe_properties["outer_diameter"] + 0.02,
+        "inter_diameter": pipe_properties["outer_diameter"] + gap,
         "thickness": pipe_properties["thickness"],
         "length": pipe_properties["length"]
     }
@@ -181,7 +181,7 @@ def simulate_tp1(fluid, hot_fluid, material, T_cold_in, T_hot_in, flow_start, fl
         "Re_external_regime": Re_external_regimes
     }
 
-def simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, T_hot_end, T_hot_steps, pipe_properties):
+def simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, T_hot_end, T_hot_steps, pipe_properties,gap=0.01):
     """
     Simulate TP2: Impact of hot fluid temperature on outlet temperature.
     """
@@ -204,7 +204,7 @@ def simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, 
     m_dot_hot = (10 * hot_fluid_density) / 60
 
     external_pipe = {
-        "inter_diameter": pipe_properties["outer_diameter"] + 0.02,
+        "inter_diameter": pipe_properties["outer_diameter"] + gap,
         "thickness": pipe_properties["thickness"],
         "length": pipe_properties["length"]
     }
@@ -246,7 +246,7 @@ def simulate_tp2(fluid, hot_fluid, material, T_cold_in, flow_cold, T_hot_start, 
         "Re_external_regime": Re_external_regimes
     }
 
-def simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties):
+def simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties,gap=0.01):
     """
     Simulate TP3: Impact of hot fluid choice on outlet temperature.
     """
@@ -268,7 +268,7 @@ def simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties):
     T_cold_in = 20
 
     external_pipe = {
-        "inter_diameter": pipe_properties["outer_diameter"] + 0.02,
+        "inter_diameter": pipe_properties["outer_diameter"] + gap,
         "thickness": pipe_properties["thickness"],
         "length": pipe_properties["length"]
     }
@@ -314,7 +314,7 @@ def simulate_tp3(fluid, material, flow_cold, flow_hot, pipe_properties):
         "Re_external_regime": Re_external_regimes
     }
 
-def simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_hot_in, dimension_type, dim_start, dim_end, dim_steps):
+def simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_hot_in, dimension_type, dim_start, dim_end, dim_steps,gap=0.01):
     """
     Simulate TP4: Impact of pipe dimensions on outlet temperature.
     """
@@ -343,7 +343,7 @@ def simulate_tp4(fluid, hot_fluid, material, flow_cold, flow_hot, T_cold_in, T_h
             pipe_properties["outer_diameter"] = dim
         A = calculate_outer_surface(pipe_properties)
         external_pipe = {
-            "inter_diameter": pipe_properties["outer_diameter"] + 0.02,
+            "inter_diameter": pipe_properties["outer_diameter"] + gap,
             "thickness": pipe_properties["thickness"],
             "length": pipe_properties["length"]
         }
