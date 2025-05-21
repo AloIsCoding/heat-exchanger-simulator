@@ -113,8 +113,8 @@ def ecriture_itemiz(file, params, results):
 
     file.write(f'''\\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
-    {"\n".join(items)}
-\\end{{itemize}}\\n''')
+    {"nn".join(items)}
+    \\end{{itemize}}\\n''')
 
 def ecriture_introduction(file, tp_name):
     """
