@@ -319,7 +319,7 @@ class HeatExchangerSimulator:
                 diameter = float(diameter_entry.get())
                 thickness = float(thickness_entry.get())
                 gap = float(gap_entry.get())
-                pipe_properties = {"outer_diameter": diameter, "thickness": thickness, "length": length}
+                pipe_properties = {"outer_diameter": diameter + 2*thickness, "thickness": thickness, "length": length}
                 
                 def callback():
                     nonlocal results
