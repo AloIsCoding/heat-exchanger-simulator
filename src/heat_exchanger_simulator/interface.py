@@ -158,7 +158,7 @@ class HeatExchangerSimulator:
         flow_end_entry = self.create_entry(params_frame, "End Flow Rate (L/min):", "100")
         flow_steps_entry = self.create_entry(params_frame, "Flow Steps:", "20")
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
-        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
+        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (intern) (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
         gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
@@ -277,7 +277,7 @@ class HeatExchangerSimulator:
         t_hot_end_entry = self.create_entry(params_frame, "End Hot Temp (°C):", "100")
         t_hot_steps_entry = self.create_entry(params_frame, "Hot Temp Steps:", "20")
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
-        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
+        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (intern) (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
         gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
@@ -392,7 +392,7 @@ class HeatExchangerSimulator:
         flow_cold_entry = self.create_entry(params_frame, "Cold Flow Rate (L/min):", "10")
         flow_hot_entry = self.create_entry(params_frame, "Hot Flow Rate (L/min):", "10")
         length_entry = self.create_entry(params_frame, "Pipe Length (m):", "2")
-        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (m):", "0.1")
+        diameter_entry = self.create_entry(params_frame, "Pipe Diameter (intern) (m):", "0.1")
         thickness_entry = self.create_entry(params_frame, "Pipe Thickness (m):", "0.005")
         gap_entry = self.create_entry(params_frame, "Gap (m):", "0.01")
 
