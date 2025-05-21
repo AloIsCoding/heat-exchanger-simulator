@@ -93,22 +93,51 @@ def ecriture_equation(file, tp_name):
 {equation}
 \\end{{equation}}\\n''')
 
-def ecriture_itemiz(file, params):
+def ecriture_itemiz(file, params, results):
     """
-    Écrit une liste des paramètres dans une liste itemize, incluant U et Re.
+    Écrit une liste des paramètres dans une liste itemize, incluant toutes les entrées utilisateur.
     """
+    items = [
+        f"\\item Cold Fluid: {params.get('fluid', 'N/A')}",
+        f"\\item Hot Fluid: {params.get('hot_fluid', 'N/A')}",
+        f"\\item Material: {params.get('material', 'N/A')}",
+        f"\\item Cold Inlet Temperature: {params.get('T_cold_in', 'N/A')} °C",
+        f"\\item Hot Inlet Temperature: {params.get('T_hot_in', 'N/A')} °C",
+        f"\\item Pipe Length: {params.get('pipe_length', 'N/A')} m",
+        f"\\item Pipe Diameter: {params.get('pipe_diameter', 'N/A')} m",
+        f"\\item Pipe Thickness: {params.get('pipe_thickness', 'N/A')} m",
+        f"\\item Gap: {params.get('gap', 'N/A')} m",
+    ]
+    
+    # Ajouter les paramètres spécifiques à chaque TP
+    if "flow_start" in params:
+        items.append(f"\\item Start Flow Rate: {params.get('flow_start', 'N/A')} L/min")
+        items.append(f"\\item End Flow Rate: {params.get('flow_end', 'N/A')} L/min")
+        items.append(f"\\item Flow Steps: {params.get('flow_steps', 'N/A')}")
+    if "flow_cold" in params:
+        items.append(f"\\item Cold Flow Rate: {params.get('flow_cold', 'N/A')} L/min")
+    if "flow_hot" in params:
+        items.append(f"\\item Hot Flow Rate: {params.get('flow_hot', 'N/A')} L/min")
+    if "T_hot_start" in params:
+        items.append(f"\\item Start Hot Temperature: {params.get('T_hot_start', 'N/A')} °C")
+        items.append(f"\\item End Hot Temperature: {params.get('T_hot_end', 'N/A')} °C")
+        items.append(f"\\item Hot Temperature Steps: {params.get('T_hot_steps', 'N/A')}")
+    if "dimension_type" in params:
+        items.append(f"\\item Dimension Type: {params.get('dimension_type', 'N/A')}")
+        items.append(f"\\item Start Dimension: {params.get('dim_start', 'N/A')} m")
+        items.append(f"\\item End Dimension: {params.get('dim_end', 'N/A')} m")
+        items.append(f"\\item Dimension Steps: {params.get('dim_steps', 'N/A')}")
+
+    # Ajouter les paramètres calculés (U, Re)
+    items.extend([
+        f"\\item Overall Heat Transfer Coefficient (U): {results.get('U', ['N/A'])[0]} W/m²·K",
+        f"\\item Internal Reynolds Number: {results.get('Re_internal', ['N/A'])[0]} ({results.get('Re_internal_regime', ['Unknown'])[0]})",
+        f"\\item External Reynolds Number: {results.get('Re_external', ['N/A'])[0]} ({results.get('Re_external_regime', ['Unknown'])[0]})"
+    ])
+
     file.write(f'''\\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
-    \\item Cold Fluid: {params.get('fluid', 'N/A')}
-    \\item Hot Fluid: {params.get('hot_fluid', 'N/A')}
-    \\item Material: {params.get('material', 'N/A')}
-    \\item Cold Inlet Temperature: {params.get('T_cold_in', 'N/A')}°C
-    \\item Hot Inlet Temperature: {params.get('T_hot_in', 'N/A')}°C
-    \\item Pipe Length: {params.get('pipe_length', 'N/A')} m
-    \\item Pipe Diameter: {params.get('pipe_diameter', 'N/A')} m
-    \\item Overall Heat Transfer Coefficient (U): {params.get('U', ['N/A'])[0]} W/m²·K
-    \\item Internal Reynolds Number: {params.get('Re_internal', ['N/A'])[0]} ({params.get('Re_internal_regime', ['Unknown'])[0]})
-    \\item External Reynolds Number: {params.get('Re_external', ['N/A'])[0]} ({params.get('Re_external_regime', ['Unknown'])[0]})
+    {"\n".join(items)}
 \\end{{itemize}}\\n''')
 
 def ecriture_template(tp_name, results, params, output_dir, base_filename):
@@ -151,7 +180,7 @@ This report presents the results of the {tp_name} simulation for a heat exchange
 
 \\section{{Experimental Parameters}}
 ''')
-        ecriture_itemiz(file, results)  # Passer results pour avoir U, Re
+        ecriture_itemiz(file, params, results)
         file.write(f'''
 \\section{{Methodology}}
 The simulation uses the following heat transfer equations:
@@ -172,7 +201,6 @@ The simulation results show the impact of the varied parameter on the outlet tem
 ''')
     
     try:
-        # Utiliser pdflatex générique (doit être dans le PATH)
         result = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)], capture_output=True, text=True)
         pdf_file = output_dir / f"{base_filename}.pdf"
         if not pdf_file.exists():
@@ -183,7 +211,6 @@ The simulation results show the impact of the varied parameter on the outlet tem
         messagebox.showerror("Erreur", "MiKTeX (pdflatex) n'est pas installé ou n'est pas dans le PATH.\nVérifiez votre installation MiKTeX.")
         return None
     finally:
-        # Nettoyer les fichiers auxiliaires, y compris .toc
         for ext in [".aux", ".log", ".out", ".toc"]:
             aux_file = output_dir / f"{base_filename}{ext}"
             if aux_file.exists():
@@ -193,7 +220,6 @@ def write_tex(tp_name, results, params):
     """
     Fonction principale pour générer le rapport PDF, LaTeX et PNG dans un dossier.
     """
-    # Fenêtre de sélection d'emplacement
     folder_path = filedialog.askdirectory(
         title="Choisir un dossier pour sauvegarder le rapport"
     )
@@ -201,7 +227,6 @@ def write_tex(tp_name, results, params):
         messagebox.showwarning("Annulé", "Génération du rapport annulée.")
         return
 
-    # Créer un nom de dossier basé sur la date
     base_name = f"rapport_{tp_name.lower()}_{time.strftime('%Y%m%d')}"
     output_dir = Path(folder_path) / base_name
     counter = 1
@@ -209,7 +234,6 @@ def write_tex(tp_name, results, params):
         output_dir = Path(folder_path) / f"{base_name}_{counter}"
         counter += 1
 
-    # Générer le rapport
     result = ecriture_template(tp_name, results, params, output_dir, f"rapport_{tp_name.lower()}")
     if result:
         pdf_path, tex_path, png_path = result

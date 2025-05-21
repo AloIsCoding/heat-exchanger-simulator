@@ -227,8 +227,12 @@ class HeatExchangerSimulator:
                     "material": material_var.get(),
                     "T_cold_in": t_cold_in_entry.get(),
                     "T_hot_in": t_hot_in_entry.get(),
+                    "flow_start" : flow_start_entry.get(),
+                    "flow_end" : flow_end_entry.get(),
+                    "flow_steps" : flow_steps_entry.get(),
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get(),
+                    "pipe_thickness" : thickness_entry.get(),
                     "gap": gap_entry.get()
                 })
 
@@ -342,11 +346,15 @@ class HeatExchangerSimulator:
                     "material": material_var.get(),
                     "T_cold_in": t_cold_in_entry.get(),
                     "flow_cold": flow_cold_entry.get(),
+                    "T_hot_start": t_hot_start_entry.get(),
+                    "T_hot_end": t_hot_end_entry.get(),
+                    "T_hot_steps": t_hot_steps_entry.get(),
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get(),
+                    "pipe_thickness": thickness_entry.get(),
                     "gap" : gap_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(pady=10)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -447,9 +455,10 @@ class HeatExchangerSimulator:
                     "flow_hot": flow_hot_entry.get(),
                     "pipe_length": length_entry.get(),
                     "pipe_diameter": diameter_entry.get(),
+                    "pipe_thickness": thickness_entry.get(),
                     "gap" : gap_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
+                
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(pady=10)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
@@ -561,10 +570,14 @@ class HeatExchangerSimulator:
                     "T_cold_in": t_cold_in_entry.get(),
                     "T_hot_in": t_hot_in_entry.get(),
                     "dimension_type": dim_type_var.get(),
+                    "dim_start": dim_start_entry.get(),
+                    "dim_end": dim_end_entry.get(),
+                    "dim_steps": dim_steps_entry.get(),
+                    "pipe_thickness": thickness_entry.get(),
                     "gap" : gap_entry.get()
                 })
-                # messagebox.showinfo("Success", "Report generated as reports/rapport.pdf")
-
+               
+               
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(pady=10)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")
         download_button.pack(pady=10)
