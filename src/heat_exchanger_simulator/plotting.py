@@ -17,7 +17,6 @@ def generate_plot(tp_name, results, output_dir=None):
     if output_dir == None:
         output_dir = os.path.abspath(__file__)[:-11]+"reports"
     output_dir = Path(output_dir)
-    print("output dir, plotting.py",output_dir)
     if not output_dir.exists():
         output_dir.mkdir()
     plot_path = output_dir / f"{tp_name.lower()}_plot.png"
