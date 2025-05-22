@@ -20,25 +20,13 @@ def calculate_outer_surface(pipe_properties):
     length = pipe_properties["length"]
     return math.pi * outer_diameter * length
 
-def calculate_conduction_resistance(pipe_properties, k):
+def calculate_log_mean_temperature_difference(Q,U,A):
     """
-    Calculates the conduction thermal resistance through the pipe wall.
+    Calculates the logarithmic mean temperature difference (Tlm) using:
+    Tlm = Q / (U * A)
     """
-    r_inner = pipe_properties["outer_diameter"] / 2 - pipe_properties["thickness"]
-    r_outer = pipe_properties["outer_diameter"] / 2
-    length = pipe_properties["length"]
-    R_cond = math.log(r_outer / r_inner) / (2 * math.pi * k * length)
-    return R_cond
-
-def calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out):
-    """
-    Calculate logarithmic mean temperature difference (delta_T_lm).
-    """
-    dT1 = T_hot_in - T_cold_out
-    dT2 = T_hot_out - T_cold_in
-    if abs(dT1 - dT2) < 1e-6:
-        return dT1
-    return (dT1 - dT2) / math.log(dT1 / dT2)
+    Tlm = Q / (U * A)
+    return Tlm
 
 def calculate_efficiency(Q, m_dot_cold, Cp_cold, T_hot_in, T_cold_in):
     """
