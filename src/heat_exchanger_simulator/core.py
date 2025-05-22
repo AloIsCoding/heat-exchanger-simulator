@@ -20,6 +20,16 @@ def calculate_outer_surface(pipe_properties):
     length = pipe_properties["length"]
     return math.pi * outer_diameter * length
 
+def calculate_delta_T_lm(T_hot_in, T_hot_out, T_cold_in, T_cold_out):
+    """
+    Calculate logarithmic mean temperature difference (delta_T_lm).
+    """
+    dT1 = T_hot_in - T_cold_out
+    dT2 = T_hot_out - T_cold_in
+    if abs(dT1 - dT2) < 1e-6:
+        return dT1
+    return (dT1 - dT2) / math.log(dT1 / dT2)
+
 def calculate_log_mean_temperature_difference(Q,U,A):
     """
     Calculates the logarithmic mean temperature difference (Tlm) using:
