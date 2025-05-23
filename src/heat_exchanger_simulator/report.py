@@ -438,7 +438,7 @@ def save_folder(tp_name, results, params,file_name):
 
     output_dir = filedialog.asksaveasfilename(title=f"Select Output Directory for {tp_name} Report")
     if not output_dir:
-        messagebox.showinfo("Annulé",  "Le rapport n'a pas été généré.")
+        messagebox.showinfo("cancel",  "The repport was not generated.")
         root.destroy()
         return
     
@@ -447,5 +447,5 @@ def save_folder(tp_name, results, params,file_name):
     
     if result:
         pdf_path, _, _ = result
-        messagebox.showinfo("Succès", f"Rapport généré avec succès : {pdf_path}")
+        messagebox.showinfo("succes", f"Rapport generated with succes : {pdf_path}")
     root.destroy()

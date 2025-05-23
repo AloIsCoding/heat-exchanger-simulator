@@ -303,35 +303,35 @@ class HeatExchangerSimulator:
                         if field_name in ["T_hot_steps", "flow_steps", "dim_steps"]:
                             value = int(value)
                             if value < 1:
-                                raise ValueError(f"{field_name.replace('_', ' ').title()} doit être au moins 1.")
-                        else:
-                            value = float(value)
-                            if value <= 0 and field_name not in ["T_cold_in", "T_hot_in", "T_hot_start", "T_hot_end"]:
-                                raise ValueError(f"{field_name.replace('_', ' ').title()} doit être positif.")
-                        if field_name == "T_hot_in" and "T_cold_in" in entries:
-                            if value <= float(entries["T_cold_in"].get()):
-                                raise ValueError("La température d'entrée du fluide chaud doit être supérieure à celle du fluide froid.")
-                        if field_name == "T_hot_start" and "T_cold_in" in entries:
-                            if value <= float(entries["T_cold_in"].get()):
-                                raise ValueError("La température de départ du fluide chaud doit être supérieure à celle du fluide froid.")
-                        if field_name == "T_hot_end" and "T_hot_start" in entries:
-                            if value < float(entries["T_hot_start"].get()):
-                                raise ValueError("La température de fin du fluide chaud doit être supérieure ou égale à la température de départ.")
-                        if field_name == "flow_end" and "flow_start" in entries:
-                            if value < float(entries["flow_start"].get()):
-                                raise ValueError("Le débit de fin doit être supérieur ou égal au débit de départ.")
-                        if field_name == "dim_end" and "dim_start" in entries:
-                            if value < float(entries["dim_start"].get()):
-                                raise ValueError("La dimension de fin doit être supérieure ou égale à la dimension de départ.")
-                        if field_name == "pipe_thickness" and "pipe_diameter" in entries:
-                            if value >= float(entries["pipe_diameter"].get()) / 2:
-                                raise ValueError("L'épaisseur du tuyau est trop grande par rapport au diamètre.")
+                                raise ValueError(f"{field_name.replace('_', ' ').title()} must be at least 1.")
+                            else:
+                                value = float(value)
+                                if value <= 0 and field_name not in ["T_cold_in", "T_hot_in", "T_hot_start", "T_hot_end"]:
+                                    raise ValueError(f"{field_name.replace('_', ' ').title()} must be positive.")
+                            if field_name == "T_hot_in" and "T_cold_in" in entries:
+                                if value <= float(entries["T_cold_in"].get()):
+                                    raise ValueError("The hot fluid inlet temperature must be higher than the cold fluid inlet temperature.")
+                            if field_name == "T_hot_start" and "T_cold_in" in entries:
+                                if value <= float(entries["T_cold_in"].get()):
+                                    raise ValueError("The hot fluid starting temperature must be higher than the cold fluid inlet temperature.")
+                            if field_name == "T_hot_end" and "T_hot_start" in entries:
+                                if value < float(entries["T_hot_start"].get()):
+                                    raise ValueError("The hot fluid end temperature must be greater than or equal to the starting temperature.")
+                            if field_name == "flow_end" and "flow_start" in entries:
+                                if value < float(entries["flow_start"].get()):
+                                    raise ValueError("The end flow rate must be greater than or equal to the starting flow rate.")
+                            if field_name == "dim_end" and "dim_start" in entries:
+                                if value < float(entries["dim_start"].get()):
+                                    raise ValueError("The end dimension must be greater than or equal to the starting dimension.")
+                            if field_name == "pipe_thickness" and "pipe_diameter" in entries:
+                                if value >= float(entries["pipe_diameter"].get()) / 2:
+                                    raise ValueError("The pipe thickness is too large compared to its diameter.")
                 return True
             except ValueError as e:
                 if str(e).startswith("invalid literal"):
-                    messagebox.showerror("Erreur", "Veuillez entrer des nombres valides pour tous les champs numériques.")
+                    messagebox.showerror("Error", "Please enter valid numbers for all numeric fields.")
                 else:
-                    messagebox.showerror("Erreur", str(e))
+                    messagebox.showerror("Error", str(e))
                 return False
 
         def run_sim():
@@ -402,7 +402,7 @@ class HeatExchangerSimulator:
                 
                 self.run_simulation(progress_bar, callback)
             except ValueError as e:
-                messagebox.showerror("Erreur", f"Erreur lors de la préparation de la simulation : {str(e)}")
+                messagebox.showerror("Error", f"failure of the simulation : {str(e)}")
 
         def download_report():
             """
@@ -414,7 +414,7 @@ class HeatExchangerSimulator:
                         field_name: entries[field_name].get() for field_name, _, _, _ in fields
                     })
                 except Exception as e:
-                    messagebox.showerror("Erreur", f"Échec de la génération du rapport : {str(e)}")
+                    messagebox.showerror("Error", f"Failure of the report generation : {str(e)}")
 
         ttk.Button(button_frame, text="Run Simulation", command=run_sim).pack(pady=10)
         download_button = ttk.Button(button_frame, text="Download Report", command=download_report, state="disabled")

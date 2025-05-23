@@ -94,7 +94,7 @@ python src/heat_exchanger_simulator/main.py
 1. Select a TP from the dropdown menu  
 2. Configure parameters (fluids, flow rates, dimensions, etc.)  
 3. Click **"Run Simulation"** to view results  
-4. Click **"Download Report"** to save a PDF lab report  
+4. Click **"Download Report"** to save a PDF lab report
 
 ➡️ For a full example, check the Jupyter notebook:  
 `notebooks/exploration.ipynb`
