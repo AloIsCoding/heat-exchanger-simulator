@@ -88,6 +88,9 @@ To launch the simulator:
 ```bash
 python src/heat_exchanger_simulator/main.py
 ```
+To download your report and graphs:
+
+Put your file name on the message box and write the name of the folder you want to create to keep your datas.
 
 ### From the GUI:
 
