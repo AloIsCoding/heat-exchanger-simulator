@@ -1,5 +1,3 @@
-# report.py
-# ---------
 import time
 import os
 import subprocess
@@ -37,7 +35,6 @@ def demander_nom_fichier(tp_name, results, params):
 
 
 
-
 def ecriture_graphique(file, tp_name, results, plo_path):
     """
     Write a graphic to the LaTeX file using a generated PNG image.
@@ -48,7 +45,7 @@ def ecriture_graphique(file, tp_name, results, plo_path):
         results (dict): Simulation results.
         plo_path (str): Path to the PNG plot.
     """
-    caption = f"Simulation results for {tp_name}"
+    caption = f"Simulation results for {tp_name} [H]"
     label = f"fig:{tp_name.lower()}_results"
     file.write(f'''\\begin{{figure}}[htb!]
         \\centering
@@ -59,7 +56,7 @@ def ecriture_graphique(file, tp_name, results, plo_path):
 
 def ecriture_results(file, tp_name, results):
     """
-    Write optimal results (maximizing T_out) as sentences.
+    Write optimal results (maximizing T_out) as sentences and a qualitative analysis.
     
     Args:
         file: Open LaTeX file.
@@ -96,63 +93,140 @@ For the optimal parameters maximizing the outlet temperature, the simulation yie
     \\item The heat transfer surface area is: {A} m²
 \\end{{itemize}}\n''')
 
+    # Qualitative Analysis
+    file.write(f'''\\subsection{{Qualitative Analysis}}\n''')
+    if tp_name == "TP1":
+        analysis = (
+            "The results show that increasing the cold fluid flow rate enhances the heat transfer rate due to a higher internal convection coefficient, driven by an increased Reynolds number. "
+            "However, beyond a certain point, the outlet temperature decreases because the fluid spends less time in the exchanger, reducing the heat absorbed. "
+            "The optimal flow rate balances these effects, maximizing the outlet temperature while maintaining efficient heat transfer."
+        )
+    elif tp_name == "TP2":
+        analysis = (
+            "Higher hot fluid inlet temperatures increase the outlet temperature and heat transfer rate by enlarging the logarithmic mean temperature difference, which drives heat transfer. "
+            "The efficiency may slightly decrease at very high temperatures due to a larger maximum possible heat transfer, but the overall performance improves with greater temperature gradients."
+        )
+    elif tp_name == "TP3":
+        analysis = (
+            "Different hot fluids affect performance through their thermophysical properties, such as specific heat capacity and viscosity. "
+            "Fluids with higher specific heat capacities transfer more heat, increasing the outlet temperature and heat transfer rate. "
+            "The choice of fluid significantly influences the exchanger's effectiveness, with optimal fluids balancing high heat capacity and favorable flow characteristics."
+        )
+    elif tp_name == "TP4":
+        analysis = (
+            "Varying pipe dimensions impacts the heat transfer surface area and flow dynamics. Longer pipes or larger diameters increase the surface area, enhancing heat transfer and outlet temperature."
+            "However, larger diameters may reduce flow velocity, affecting convection coefficients. The optimal dimension maximizes heat transfer while maintaining efficient flow regimes."
+        )
+    file.write(f'{analysis}\n')
+
 def ecriture_equation(file, tp_name):
     """
-    Write the equations used in the simulation.
+    Write the key equations used in the simulation with explanations.
     
     Args:
         file: Open LaTeX file.
         tp_name (str): Name of the TP.
     """
-    equation = """
-    Q = \\dot{m} \\cdot c_p \\cdot (T_{out} - T_{in}) \\quad \\text{(Heat transfer)} \\\\
-    Q = U \\cdot A \\cdot \\Delta T_{lm} \\quad \\text{(Overall heat transfer)}
-    """
-    file.write(f'''\\begin{{equation}}\\label{{eq:{tp_name.lower()}_heat_transfer}}
-{equation}
-\\end{{equation}}\n''')
+    file.write(f'''The simulation relies on the following key equations to model the heat exchanger's performance:
+
+\\begin{{itemize}}
+    \\item \\textbf{{Heat transfer by the cold fluid}}:
+    \\begin{{equation}}\\label{{eq:{tp_name.lower()}_heat_transfer}}
+    Q = \\dot{{m}} \\cdot c_p \\cdot (T_{{out}} - T_{{in}})
+    \\end{{equation}}
+    This equation calculates the heat transfer rate ($Q$) based on the mass flow rate ($\\dot{{m}}$), specific heat capacity ($c_p$), and temperature difference between the outlet ($T_{{out}}$) and inlet ($T_{{in}}$) of the cold fluid. It quantifies the energy absorbed by the cold fluid.
+
+    \\item \\textbf{{Overall heat transfer}}:
+    \\begin{{equation}}\\label{{eq:{tp_name.lower()}_overall_transfer}}
+    Q = U \\cdot A \\cdot \\Delta T_{{lm}}
+    \\end{{equation}}
+    This equation computes the heat transfer rate ($Q$) using the overall heat transfer coefficient ($U$), the heat transfer surface area ($A$), and the logarithmic mean temperature difference ($\\Delta T_{{lm}}$). It describes the total heat exchanged between the fluids.
+
+    \\item \\textbf{{Logarithmic mean temperature difference (LMTD)}}:
+    \\begin{{equation}}\\label{{eq:{tp_name.lower()}_lmtd}}
+    \\Delta T_{{lm}} = \\frac{{\\Delta T_1 - \\Delta T_2}}{{\\ln(\\Delta T_1 / \\Delta T_2)}}
+    \\end{{equation}}
+    The LMTD accounts for the temperature gradient along the exchanger, where $\\Delta T_1$ and $\\Delta T_2$ are the temperature differences at the two ends. It is critical for calculating the driving force for heat transfer in counter-flow exchangers.
+
+    \\item \\textbf{{Reynolds number}}:
+    \\begin{{equation}}\\label{{eq:{tp_name.lower()}_reynolds}}
+    Re = \\frac{{\\rho v D}}{{\\mu}}
+    \\end{{equation}}
+    The Reynolds number ($Re$) determines the flow regime (laminar or turbulent) using fluid density ($\\rho$), velocity ($v$), characteristic length ($D$), and dynamic viscosity ($\\mu$). It influences the convection coefficients and heat transfer efficiency.
+
+    \\item \\textbf{{Nusselt number (Dittus-Boelter correlation)}}:
+    \\begin{{equation}}\\label{{eq:{tp_name.lower()}_nusselt}}
+    Nu = 0.023 \\cdot Re^{{0.8}} \\cdot Pr^{{0.4}}
+    \\end{{equation}}
+    The Nusselt number ($Nu$) relates to the convection coefficient ($h$) via $h = Nu \\cdot k / D$, where $k$ is the thermal conductivity and $D$ is the diameter. The Dittus-Boelter correlation is used for turbulent flow to estimate $h$, which affects $U$.
+\\end{{itemize}}\n''')
 
 def ecriture_itemiz(file, params, results):
     """
-    Write a list of parameters in an itemize list, including all user inputs.
+    Write a list of parameters in an itemize list, including user inputs and defaults.
     
     Args:
         file: Open LaTeX file.
         params (dict): Simulation parameters.
         results (dict): Simulation results.
     """
+    # Default values
+    defaults = {
+        'fluid': 'water',
+        'hot_fluid': 'water',
+        'material': 'stainless steel',
+        'T_cold_in': 20,
+        'T_hot_in': 50,
+        'pipe_length': 2,
+        'pipe_diameter': 0.1,
+        'pipe_thickness': 0.005,
+        'gap': 0.01,
+        'flow_cold': 10,
+        'flow_hot': 10,
+        'T_hot_start': 50,
+        'T_hot_end': 100,
+        'T_hot_steps': 20,
+        'flow_start': 5,
+        'flow_end': 15,
+        'flow_steps': 10,
+        'dim_start': 0.05,
+        'dim_end': 0.15,
+        'dim_steps': 10,
+        'dimension_type': 'length'
+    }
+    
     # Nettoyer les paramètres pour éviter les caractères problématiques
-    safe_params = {k: str(v).replace('_', ' ').replace('%', '\\%').replace('#', '\\#') for k, v in params.items()}
+    safe_params = {k: str(params.get(k, defaults.get(k, 'N/A'))).replace('_', ' ').replace('%', '\\%').replace('#', '\\#') for k in defaults.keys()}
     
     items = [
-        f"\\item Cold Fluid: {safe_params.get('fluid', 'N/A')}",
-        f"\\item Hot Fluid: {safe_params.get('hot_fluid', 'N/A')}",
-        f"\\item Material: {safe_params.get('material', 'N/A')}",
-        f"\\item Cold Inlet Temperature: {safe_params.get('T_cold_in', 'N/A')} °C",
-        f"\\item Hot Inlet Temperature: {safe_params.get('T_hot_in', 'N/A')} °C",
-        f"\\item Pipe Length: {safe_params.get('pipe_length', 'N/A')} m",
-        f"\\item Pipe Diameter: {safe_params.get('pipe_diameter', 'N/A')} m",
-        f"\\item Pipe Thickness: {safe_params.get('pipe_thickness', 'N/A')} m",
-        f"\\item Gap: {safe_params.get('gap', 'N/A')} m",
+        f"\\item Cold Fluid: {safe_params['fluid']}{' (default)' if 'fluid' not in params else ''}",
+        f"\\item Hot Fluid: {safe_params['hot_fluid']}{' (default)' if 'hot_fluid' not in params else ''}",
+        f"\\item Material: {safe_params['material']}{' (default)' if 'material' not in params else ''}",
+        f"\\item Cold Inlet Temperature: {safe_params['T_cold_in']} °C{' (default)' if 'T_cold_in' not in params else ''}",
+        f"\\item Hot Inlet Temperature: {safe_params['T_hot_in']} °C{' (default)' if 'T_hot_in' not in params else ''}",
+        f"\\item Pipe Length: {safe_params['pipe_length']} m{' (default)' if 'pipe_length' not in params else ''}",
+        f"\\item Pipe Diameter: {safe_params['pipe_diameter']} m{' (default)' if 'pipe_diameter' not in params else ''}",
+        f"\\item Pipe Thickness: {safe_params['pipe_thickness']} m{' (default)' if 'pipe_thickness' not in params else ''}",
+        f"\\item Gap: {safe_params['gap']} m{' (default)' if 'gap' not in params else ''}",
     ]
     
-    if "flow_start" in safe_params:
-        items.append(f"\\item Start Flow Rate: {safe_params.get('flow_start', 'N/A')} L/min")
-        items.append(f"\\item End Flow Rate: {safe_params.get('flow_end', 'N/A')} L/min")
-        items.append(f"\\item Flow Steps: {safe_params.get('flow_steps', 'N/A')}")
-    if "flow_cold" in safe_params:
-        items.append(f"\\item Cold Flow Rate: {safe_params.get('flow_cold', 'N/A')} L/min")
-    if "flow_hot" in safe_params:
-        items.append(f"\\item Hot Flow Rate: {safe_params.get('flow_hot', 'N/A')} L/min")
-    if "T_hot_start" in safe_params:
-        items.append(f"\\item Start Hot Temperature: {safe_params.get('T_hot_start', 'N/A')} °C")
-        items.append(f"\\item End Hot Temperature: {safe_params.get('T_hot_end', 'N/A')} °C")
-        items.append(f"\\item Hot Temperature Steps: {safe_params.get('T_hot_steps', 'N/A')}")
-    if "dimension_type" in safe_params:
-        items.append(f"\\item Dimension Type: {safe_params.get('dimension_type', 'N/A')}")
-        items.append(f"\\item Start Dimension: {safe_params.get('dim_start', 'N/A')} m")
-        items.append(f"\\item End Dimension: {safe_params.get('dim_end', 'N/A')} m")
-        items.append(f"\\item Dimension Steps: {safe_params.get('dim_steps', 'N/A')}")
+    if "flow_start" in params or 'flow_start' in safe_params:
+        items.append(f"\\item Start Flow Rate: {safe_params['flow_start']} L/min{' (default)' if 'flow_start' not in params else ''}")
+        items.append(f"\\item End Flow Rate: {safe_params['flow_end']} L/min{' (default)' if 'flow_end' not in params else ''}")
+        items.append(f"\\item Flow Steps: {safe_params['flow_steps']}{' (default)' if 'flow_steps' not in params else ''}")
+    if "flow_cold" in params or 'flow_cold' in safe_params:
+        items.append(f"\\item Cold Flow Rate: {safe_params['flow_cold']} L/min{' (default)' if 'flow_cold' not in params else ''}")
+    if "flow_hot" in params or 'flow_hot' in safe_params:
+        items.append(f"\\item Hot Flow Rate: {safe_params['flow_hot']} L/min{' (default)' if 'flow_hot' not in params else ''}")
+    if "T_hot_start" in params or 'T_hot_start' in safe_params:
+        items.append(f"\\item Start Hot Temperature: {safe_params['T_hot_start']} °C{' (default)' if 'T_hot_start' not in params else ''}")
+        items.append(f"\\item End Hot Temperature: {safe_params['T_hot_end']} °C{' (default)' if 'T_hot_end' not in params else ''}")
+        items.append(f"\\item Hot Temperature Steps: {safe_params['T_hot_steps']}{' (default)' if 'T_hot_steps' not in params else ''}")
+    if "dimension_type" in params or 'dimension_type' in safe_params:
+        items.append(f"\\item Dimension Type: {safe_params['dimension_type']}{' (default)' if 'dimension_type' not in params else ''}")
+        items.append(f"\\item Start Dimension: {safe_params['dim_start']} m{' (default)' if 'dim_start' not in params else ''}")
+        items.append(f"\\item End Dimension: {safe_params['dim_end']} m{' (default)' if 'dim_end' not in params else ''}")
+        items.append(f"\\item Dimension Steps: {safe_params['dim_steps']}{' (default)' if 'dim_steps' not in params else ''}")
 
     items.extend([
         f"\\item Average Overall Heat Transfer Coefficient (U): {round(np.mean(results.get('U', [0])), 2)} W/m²·K",
@@ -167,110 +241,47 @@ def ecriture_itemiz(file, params, results):
 
 def ecriture_introduction(file, tp_name):
     """
-    Write an introduction explaining the purpose of the TP.
+    Write a professional introduction with context and specific objectives.
     
     Args:
         file: Open LaTeX file.
         tp_name (str): Name of the TP.
     """
+    context = (
+        "Heat exchangers are essential devices in industrial and engineering applications, facilitating efficient thermal energy transfer between two fluids without mixing. "
+        "Widely used in power plants, HVAC systems, and chemical processing, they optimize energy efficiency by leveraging temperature gradients. "
+        "This simulation focuses on a counter-flow concentric tube heat exchanger, where fluids flow in opposite directions to maximize heat transfer efficiency."
+    )
+    
     if tp_name == "TP1":
-        purpose = (
-            "The purpose of TP1 is to study the effect of the cold fluid flow rate on the performance of a heat exchanger. "
-            "By varying the flow rate, we aim to understand how it influences the outlet temperature, heat transfer rate, "
-            "and efficiency, while keeping other parameters such as pipe dimensions and fluid properties constant. This "
-            "experiment highlights the trade-off between increased convection and reduced residence time."
+        objective = (
+            "The objective of TP1 is to study the effect of the cold fluid flow rate on the heat exchanger's performance. "
+            "By varying the flow rate while keeping other parameters constant (e.g., pipe dimensions, fluid properties, hot fluid conditions), we aim to evaluate its impact on the outlet temperature, heat transfer rate, and efficiency. "
+            "This experiment highlights the trade-off between enhanced convection at higher flow rates and reduced residence time, which affects the heat absorbed."
         )
     elif tp_name == "TP2":
-        purpose = (
-            "The purpose of TP2 is to investigate the impact of the hot fluid inlet temperature on the heat exchanger's "
-            "performance. By varying the inlet temperature of the hot fluid, we seek to determine its effect on the outlet "
-            "temperature, heat transfer rate, and efficiency. This experiment emphasizes the role of the temperature "
-            "difference as a driving force for heat transfer."
+        objective = (
+            "The objective of TP2 is to investigate the influence of the hot fluid inlet temperature on the heat exchanger's performance. "
+            "By adjusting the inlet temperature with fixed flow rates and pipe geometry, we seek to assess its effect on the outlet temperature, heat transfer rate, and efficiency. "
+            "This experiment emphasizes the role of the temperature difference as the primary driving force for heat transfer."
         )
     elif tp_name == "TP3":
-        purpose = (
-            "The purpose of TP3 is to explore the influence of different hot fluids on the heat exchanger's performance. "
-            "By testing various fluids with distinct thermal properties (e.g., specific heat capacity, viscosity), we aim "
-            "to identify which fluid maximizes the outlet temperature and heat transfer rate. This experiment illustrates "
-            "the importance of fluid selection in heat exchanger design."
+        objective = (
+            "The objective of TP3 is to analyze the impact of different hot fluids on the heat exchanger's performance. "
+            "By testing fluids with varying thermophysical properties (e.g., specific heat capacity, viscosity), we aim to identify which fluid maximizes the outlet temperature and heat transfer rate. "
+            "This experiment underscores the critical role of fluid selection in optimizing heat exchanger design."
         )
     elif tp_name == "TP4":
-        purpose = (
-            "The purpose of TP4 is to examine the effect of pipe dimensions (length or diameter) on the heat exchanger's "
-            "performance. By varying one dimension while keeping other parameters constant, we aim to understand how the "
-            "heat transfer surface area and flow dynamics affect the outlet temperature, heat transfer rate, and efficiency. "
-            "This experiment underscores the role of geometry in optimizing heat exchanger performance."
+        objective = (
+            "The objective of TP4 is to examine the effect of pipe dimensions (length or diameter) on the heat exchanger's performance. "
+            "By varying one dimension while keeping other parameters constant, we aim to understand its influence on the outlet temperature, heat transfer rate, and efficiency. "
+            "This experiment illustrates the importance of geometry in enhancing heat transfer efficiency."
         )
     
     file.write(f'''\\section{{Introduction}}
-{purpose}\n''')
+{context}
 
-def ecriture_interpretation(file, tp_name, results, params):
-    """
-    Write a clear and concise interpretation of the results with physical analysis.
-    
-    Args:
-        file: Open LaTeX file.
-        tp_name (str): Name of the TP.
-        results (dict): Simulation results.
-        params (dict): Simulation parameters.
-    """
-    max_T_out_idx = np.argmax(results["T_out"])
-    max_T_out = round(results["T_out"][max_T_out_idx], 2)
-
-    if tp_name == "TP1":
-        flow_rate = results["flow_rates"][max_T_out_idx]
-        h_internal = round(results["h_internal"][max_T_out_idx], 2)
-        delta_T_lm = round(results["delta_T_lm"][max_T_out_idx], 2)
-        interpretation = (
-            "In TP1, we varied the cold fluid flow rate to observe its impact on the heat exchanger's performance. "
-            "Higher flow rates increase the internal convection coefficient ($h_{internal}$) by boosting the Reynolds number, "
-            "which enhances the overall heat transfer coefficient (U). For instance, at the optimal flow rate, "
-            "$h_{internal}$ reaches",h_internal,"W/m²·K. However, increased flow reduces the fluid's residence time in the "
-            "exchanger, leading to a lower outlet temperature ($T_{out}$) at very high flows. The logarithmic mean temperature "
-            "difference (LMTD), such as",delta_T_lm,"°C at the optimal point, decreases as $T_{out}$ rises, reflecting a smaller "
-            "temperature gradient. The optimal flow rate balances enhanced convection with sufficient residence time, "
-            "achieving a maximum $T_{out} of",max_T_out,"°C at",flow_rate,"L/min."
-        )
-    elif tp_name == "TP2":
-        T_hot_in = results["T_hot_in"][max_T_out_idx]
-        delta_T_lm = round(results["delta_T_lm"][max_T_out_idx], 2)
-        interpretation = (
-            "In TP2, we adjusted the hot fluid inlet temperature to study its effect on the heat exchanger. A higher T_hot_in "
-            "increases the logarithmic mean temperature difference (LMTD), which acts as the driving force for heat transfer. "
-            f"For example, at the optimal T_hot_in, LMTD is {delta_T_lm} °C. This leads to a higher heat transfer rate (Q) and "
-            "a higher outlet temperature (T_out). Since the flow rates and fluid properties are fixed, the convection coefficients "
-            "and U remain constant. The efficiency may slightly decrease at higher T_hot_in due to a larger maximum possible heat "
-            f"transfer. The maximum T_out of {max_T_out} °C is achieved at T_hot_in = {T_hot_in} °C, where the temperature "
-            "gradient is maximized."
-        )
-    elif tp_name == "TP3":
-        hot_fluid = results["hot_fluids"][max_T_out_idx]
-        cp_hot = specific_heat_capacity.get(hot_fluid.lower(), 4186)
-        h_external = round(results["h_external"][max_T_out_idx], 2)
-        interpretation = (
-            "In TP3, we tested different hot fluids to evaluate their impact on the heat exchanger's performance. Each fluid's "
-            "specific heat capacity (c_p), density, and viscosity affect the external convection coefficient (h_external) and "
-            f"the overall heat transfer coefficient (U). For instance, with {hot_fluid} (c_p = {cp_hot} J/kg·K), h_external is "
-            f"{h_external} W/m²·K. Fluids with higher c_p store and transfer more heat, increasing T_out and Q. The internal "
-            "convection coefficient remains constant, as the cold fluid is unchanged. The LMTD adjusts slightly based on T_out. "
-            f"The maximum T_out of {max_T_out} °C is achieved with {hot_fluid}, due to its superior thermal properties."
-        )
-    elif tp_name == "TP4":
-        dimension = results["dimensions"][max_T_out_idx]
-        dimension_type = results.get('dimension_type', 'length')
-        A = round(results["A"][max_T_out_idx], 4)
-        interpretation = (
-            f"In TP4, we varied the pipe {dimension_type} to assess its effect on the heat exchanger's performance. Increasing "
-            f"the {dimension_type} expands the heat transfer surface area (A), such as {A} m² at the optimal point, which boosts "
-            "the heat transfer rate (Q). For length variations, longer pipes increase residence time, further raising T_out. For "
-            "diameter variations, larger diameters alter flow dynamics, affecting the internal convection coefficient. The LMTD "
-            "decreases as T_out rises, indicating a smaller temperature gradient. Efficiency improves with larger dimensions due "
-            f"to enhanced heat transfer capacity. The maximum T_out of {max_T_out} °C is achieved at {dimension_type} = {dimension} m."
-        )
-    
-    file.write(f'''\\section{{Interpretation}}
-{interpretation}\n''')
+{objective}\n''')
 
 def ecriture_conclusion(file, tp_name, results):
     """
@@ -291,7 +302,7 @@ def ecriture_conclusion(file, tp_name, results):
     elif tp_name == "TP3":
         optimal_param = f"hot fluid '{results['hot_fluids'][max_T_out_idx]}'"
     elif tp_name == "TP4":
-        optimal_param = f"pipe {results['dimension_type']} of {results['dimensions'][max_T_out_idx]} m"
+        optimal_param = f"pipe {results.get('dimension_type', 'length')} of {results['dimensions'][max_T_out_idx]} m"
 
     conclusion = (
         f"This simulation demonstrates how the varied parameter affects the heat exchanger's performance. "
@@ -302,7 +313,7 @@ def ecriture_conclusion(file, tp_name, results):
     file.write(f'''\\section{{Conclusion}}
 {conclusion}\n''')
 
-def ecriture_template(tp_name, results, params, output_dir, base_filename,name):
+def ecriture_template(tp_name, results, params, output_dir, base_filename):
     """
     Write the complete LaTeX template with all elements.
     
@@ -316,13 +327,9 @@ def ecriture_template(tp_name, results, params, output_dir, base_filename,name):
     Returns:
         tuple: Paths to the generated PDF, LaTeX, and PNG files, or None if failed.
     """
-
-    #the output_dir est le path too le fichier tex 
-
-
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
-    tex_file = output_dir / f"{name}.tex"
+    tex_file = output_dir / f"{base_filename}.tex"
     
     try:
         plo_path = generate_plot(tp_name, results, output_dir)
@@ -355,22 +362,21 @@ def ecriture_template(tp_name, results, params, output_dir, base_filename,name):
 ''')
             ecriture_introduction(file, tp_name)
             file.write(f'''
-\\section{{Experimental Parameters}}
+\\section{{Experimental Setup}}
+The following parameters were used in the simulation, with default values applied where user input was not provided:
 ''')
             ecriture_itemiz(file, params, results)
             file.write(f'''
 \\section{{Methodology}}
-The simulation uses the following heat transfer equations:
 ''')
             ecriture_equation(file, tp_name)
             
             file.write(f'''
 \\section{{Results and Discussion}}
 ''')
-            ecriture_graphique(file, tp_name, results, plo_path)
+            ecriture_graphique(file, tp_name, results, plo_path)  # Correction : ajout de plo_path
             ecriture_results(file, tp_name, results)
             
-            ecriture_interpretation(file, tp_name, results, params)
             ecriture_conclusion(file, tp_name, results)
             
             file.write(f'''
@@ -423,9 +429,9 @@ def write_tex(tp_name, results, params):
         params (dict): Simulation parameters.
     """
     filename = demander_nom_fichier(tp_name, results, params)
-    print("filename",filename)
     
-    
+
+
 def save_folder(tp_name, results, params,file_name):
     root = tk.Tk()
     root.withdraw()
