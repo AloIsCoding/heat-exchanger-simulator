@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 __pycache__/*.py[cod]
+/src/heat_exchanger_simulator/__pycache__/
+/src/heat_exchanger_simulator/__pycache__/*.py[cod]
