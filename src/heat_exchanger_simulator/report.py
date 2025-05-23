@@ -25,7 +25,7 @@ def ecriture_graphique(file, tp_name, results, plo_path):
         \\includegraphics[width=0.8\\textwidth]{{{Path(plo_path).name}}}
         \\caption{{{caption}}}
         \\label{{{label}}}
-\\end{{figure}}\\n''')
+\\end{{figure}}\n''')
 
 def ecriture_results(file, tp_name, results):
     """
@@ -64,7 +64,7 @@ For the optimal parameters maximizing the outlet temperature, the simulation yie
     \\item The internal convection coefficient is: {h_internal} W/m²·K
     \\item The external convection coefficient is: {h_external} W/m²·K
     \\item The heat transfer surface area is: {A} m²
-\\end{{itemize}}\\n''')
+\\end{{itemize}}\n''')
 
 def ecriture_equation(file, tp_name):
     """
@@ -80,7 +80,7 @@ def ecriture_equation(file, tp_name):
     """
     file.write(f'''\\begin{{equation}}\\label{{eq:{tp_name.lower()}_heat_transfer}}
 {equation}
-\\end{{equation}}\\n''')
+\\end{{equation}}\n''')
 
 def ecriture_itemiz(file, params, results):
     """
@@ -133,7 +133,7 @@ def ecriture_itemiz(file, params, results):
     file.write(f'''\\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
     {"\n".join(items)}
-    \\end{{itemize}}\\n''')
+    \\end{{itemize}}\n''')
 
 def ecriture_introduction(file, tp_name):
     """
@@ -173,7 +173,7 @@ def ecriture_introduction(file, tp_name):
         )
     
     file.write(f'''\\section{{Introduction}}
-{purpose}\\n''')
+{purpose}\n''')
 
 def ecriture_interpretation(file, tp_name, results, params):
     """
@@ -240,7 +240,7 @@ def ecriture_interpretation(file, tp_name, results, params):
         )
     
     file.write(f'''\\section{{Interpretation}}
-{interpretation}\\n''')
+{interpretation}\n''')
 
 def ecriture_conclusion(file, tp_name, results):
     """
@@ -270,7 +270,7 @@ def ecriture_conclusion(file, tp_name, results):
     )
     
     file.write(f'''\\section{{Conclusion}}
-{conclusion}\\n''')
+{conclusion}\n''')
 
 def ecriture_template(tp_name, results, params, output_dir, base_filename):
     """
