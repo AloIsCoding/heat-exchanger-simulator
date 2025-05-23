@@ -27,7 +27,7 @@ def ecriture_graphique(file, tp_name, results, plo_path):
         \\includegraphics[width=0.8\\textwidth]{{{Path(plo_path).name}}}
         \\caption{{{caption}}}
         \\label{{{label}}}
-\\end{{figure}}\\n''')
+\\end{{figure}}\n''')
 
 def ecriture_results(file, tp_name, results):
     """
@@ -58,6 +58,7 @@ Les résultats optimaux n'ont pas pu être calculés en raison de données manqu
     file.write(f'''\\subsection{{Optimal Results}}
 The simulation identifies the following optimal parameters maximizing the outlet temperature:
 \\begin{{itemize}}
+<<<<<<< HEAD
     \\item Outlet temperature: {T_out} °C
     \\item Heat transferred: {Q} W
     \\item Efficiency: {efficiency} \\%
@@ -70,6 +71,17 @@ The simulation identifies the following optimal parameters maximizing the outlet
 
 Qualitative analysis: For {tp_name}, the optimal outlet temperature is achieved through a balance of flow conditions, temperature gradients, or geometric parameters, as detailed in Section \\ref{{sec:methodology}}. The efficiency reflects effective use of the temperature difference, with convection coefficients indicating the flow regime's impact (laminar or turbulent).
 ''')
+=======
+    \\item The outlet temperature is: {T_out} °C
+    \\item The heat transferred is: {Q} W
+    \\item The efficiency is: {efficiency} \\%
+    \\item The overall heat transfer coefficient (U) is: {U} W/m²·K
+    \\item The logarithmic mean temperature difference (LMTD) is: {delta_T_lm} °C
+    \\item The internal convection coefficient is: {h_internal} W/m²·K
+    \\item The external convection coefficient is: {h_external} W/m²·K
+    \\item The heat transfer surface area is: {A} m²
+\\end{{itemize}}\n''')
+>>>>>>> 979534529b83cde845b01b4a9c46fade934e37f2
 
 def ecriture_equation(file, tp_name):
     """
@@ -79,6 +91,7 @@ def ecriture_equation(file, tp_name):
         file: Open LaTeX file.
         tp_name (str): Name of the TP.
     """
+<<<<<<< HEAD
     file.write(f'''\\section{{Methodology}}\\label{{sec:methodology}}
 The simulation models a counter-flow concentric tube heat exchanger using the following key equations:
 
@@ -113,6 +126,15 @@ This equation models the total thermal resistance across the exchanger.
 These equations are solved iteratively to determine the outlet temperatures and heat transfer rates, with convection coefficients 
 calculated based on flow properties (e.g., Reynolds number) and empirical correlations.
 ''')
+=======
+    equation = """
+    Q = \\dot{m} \\cdot c_p \\cdot (T_{out} - T_{in}) \\quad \\text{(Heat transfer)} \\\\
+    Q = U \\cdot A \\cdot \\Delta T_{lm} \\quad \\text{(Overall heat transfer)}
+    """
+    file.write(f'''\\begin{{equation}}\\label{{eq:{tp_name.lower()}_heat_transfer}}
+{equation}
+\\end{{equation}}\n''')
+>>>>>>> 979534529b83cde845b01b4a9c46fade934e37f2
 
 def ecriture_itemiz(file, params, results):
     """
@@ -190,7 +212,10 @@ The following parameters were used in the simulation, with default values indica
 \\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
     {"\n".join(items)}
+
 \\end{{itemize}}\\n''')
+=======
+    \\end{{itemize}}\n''')
 
 def ecriture_introduction(file, tp_name):
     """
@@ -232,9 +257,80 @@ def ecriture_introduction(file, tp_name):
         )
     
     file.write(f'''\\section{{Introduction}}
+
 {context}
 
 {objective}\\n''')
+=======
+{purpose}\n''')
+
+def ecriture_interpretation(file, tp_name, results, params):
+    """
+    Write a clear and concise interpretation of the results with physical analysis.
+    
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
+        params (dict): Simulation parameters.
+    """
+    max_T_out_idx = np.argmax(results["T_out"])
+    max_T_out = round(results["T_out"][max_T_out_idx], 2)
+
+    if tp_name == "TP1":
+        flow_rate = results["flow_rates"][max_T_out_idx]
+        h_internal = round(results["h_internal"][max_T_out_idx], 2)
+        delta_T_lm = round(results["delta_T_lm"][max_T_out_idx], 2)
+        interpretation = (
+            "In TP1, we varied the cold fluid flow rate to observe its impact on the heat exchanger's performance. "
+            "Higher flow rates increase the internal convection coefficient ($h_{internal}$) by boosting the Reynolds number, "
+            "which enhances the overall heat transfer coefficient (U). For instance, at the optimal flow rate, "
+            "$h_{internal}$ reaches",h_internal,"W/m²·K. However, increased flow reduces the fluid's residence time in the "
+            "exchanger, leading to a lower outlet temperature ($T_{out}$) at very high flows. The logarithmic mean temperature "
+            "difference (LMTD), such as",delta_T_lm,"°C at the optimal point, decreases as $T_{out}$ rises, reflecting a smaller "
+            "temperature gradient. The optimal flow rate balances enhanced convection with sufficient residence time, "
+            "achieving a maximum $T_{out} of",max_T_out,"°C at",flow_rate,"L/min."
+        )
+    elif tp_name == "TP2":
+        T_hot_in = results["T_hot_in"][max_T_out_idx]
+        delta_T_lm = round(results["delta_T_lm"][max_T_out_idx], 2)
+        interpretation = (
+            "In TP2, we adjusted the hot fluid inlet temperature to study its effect on the heat exchanger. A higher T_hot_in "
+            "increases the logarithmic mean temperature difference (LMTD), which acts as the driving force for heat transfer. "
+            f"For example, at the optimal T_hot_in, LMTD is {delta_T_lm} °C. This leads to a higher heat transfer rate (Q) and "
+            "a higher outlet temperature (T_out). Since the flow rates and fluid properties are fixed, the convection coefficients "
+            "and U remain constant. The efficiency may slightly decrease at higher T_hot_in due to a larger maximum possible heat "
+            f"transfer. The maximum T_out of {max_T_out} °C is achieved at T_hot_in = {T_hot_in} °C, where the temperature "
+            "gradient is maximized."
+        )
+    elif tp_name == "TP3":
+        hot_fluid = results["hot_fluids"][max_T_out_idx]
+        cp_hot = specific_heat_capacity.get(hot_fluid.lower(), 4186)
+        h_external = round(results["h_external"][max_T_out_idx], 2)
+        interpretation = (
+            "In TP3, we tested different hot fluids to evaluate their impact on the heat exchanger's performance. Each fluid's "
+            "specific heat capacity (c_p), density, and viscosity affect the external convection coefficient (h_external) and "
+            f"the overall heat transfer coefficient (U). For instance, with {hot_fluid} (c_p = {cp_hot} J/kg·K), h_external is "
+            f"{h_external} W/m²·K. Fluids with higher c_p store and transfer more heat, increasing T_out and Q. The internal "
+            "convection coefficient remains constant, as the cold fluid is unchanged. The LMTD adjusts slightly based on T_out. "
+            f"The maximum T_out of {max_T_out} °C is achieved with {hot_fluid}, due to its superior thermal properties."
+        )
+    elif tp_name == "TP4":
+        dimension = results["dimensions"][max_T_out_idx]
+        dimension_type = results.get('dimension_type', 'length')
+        A = round(results["A"][max_T_out_idx], 4)
+        interpretation = (
+            f"In TP4, we varied the pipe {dimension_type} to assess its effect on the heat exchanger's performance. Increasing "
+            f"the {dimension_type} expands the heat transfer surface area (A), such as {A} m² at the optimal point, which boosts "
+            "the heat transfer rate (Q). For length variations, longer pipes increase residence time, further raising T_out. For "
+            "diameter variations, larger diameters alter flow dynamics, affecting the internal convection coefficient. The LMTD "
+            "decreases as T_out rises, indicating a smaller temperature gradient. Efficiency improves with larger dimensions due "
+            f"to enhanced heat transfer capacity. The maximum T_out of {max_T_out} °C is achieved at {dimension_type} = {dimension} m."
+        )
+    
+    file.write(f'''\\section{{Interpretation}}
+{interpretation}\n''')
+
 
 def ecriture_conclusion(file, tp_name, results):
     """
@@ -267,7 +363,7 @@ def ecriture_conclusion(file, tp_name, results):
     )
     
     file.write(f'''\\section{{Conclusion}}
-{conclusion}\\n''')
+{conclusion}\n''')
 
 def ecriture_template(tp_name, results, params, output_dir, pdf_filename, tex_filename, plot_filename):
     """
