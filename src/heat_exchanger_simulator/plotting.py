@@ -1,53 +1,53 @@
 import matplotlib.pyplot as plt
 from pathlib import Path
-import os
 
-def generate_plot(tp_name, results, output_dir=None):
+def generate_plot(tp_name, results, output_dir, filename=None):
     """
-    Generate and save a plot for the given TP.
-
-    Parameters:
-        tp_name (str): Name of the TP (e.g., "TP1", "TP2")
-        results (dict): Simulation results
-        output_dir (str): Directory to save the plot
-
+    Generate a plot of simulation results and save it as a PNG file.
+    
+    Args:
+        tp_name (str): Name of the TP (e.g., "TP1").
+        results (dict): Simulation results.
+        output_dir (str or Path): Directory to save the plot.
+        filename (str, optional): Custom filename for the plot (e.g., "graphe_tp1.png").
+    
     Returns:
-        str: Path to the saved plot
+        str: Path to the generated PNG file.
     """
-    if output_dir == None:
-        output_dir = os.path.abspath(__file__)[:-11]+"reports"
     output_dir = Path(output_dir)
-    if not output_dir.exists():
-        output_dir.mkdir()
-    plot_path = output_dir / f"{tp_name.lower()}_plot.png"
-
-    plt.figure(figsize=(8, 6), dpi=100)
+    output_dir.mkdir(exist_ok=True)
+    if filename is None:
+        filename = f"{tp_name.lower()}_plot.png"
+    plo_path = output_dir / filename
+    
+    plt.figure(figsize=(8, 6))
     
     if tp_name == "TP1":
-        plt.plot(results["flow_rates"], results["T_out"], marker="o", color="#ED1B2F", linestyle="-", linewidth=2)
-        plt.xlabel("Flow Rate (L/min)", fontsize=12)
-        plt.ylabel("Outlet Temperature (°C)", fontsize=12)
-        plt.title("TP1: Impact of Flow Rate on Outlet Temperature", fontsize=14, pad=10)
+        plt.plot(results["flow_rates"], results["T_out"], 'b-', label="Outlet Temperature")
+        plt.xlabel("Cold Fluid Flow Rate (L/min)")
+        plt.ylabel("Outlet Temperature (°C)")
+        plt.title("Effect of Flow Rate on Outlet Temperature")
     elif tp_name == "TP2":
-        plt.plot(results["T_hot_in"], results["T_out"], marker="o", color="#ED1B2F", linestyle="-", linewidth=2)
-        plt.xlabel("Hot Fluid Temperature (°C)", fontsize=12)
-        plt.ylabel("Outlet Temperature (°C)", fontsize=12)
-        plt.title("TP2: Impact of Hot Fluid Temperature on Outlet Temperature", fontsize=14, pad=10)
+        plt.plot(results["T_hot_in"], results["T_out"], 'r-', label="Outlet Temperature")
+        plt.xlabel("Hot Fluid Inlet Temperature (°C)")
+        plt.ylabel("Outlet Temperature (°C)")
+        plt.title("Effect of Hot Fluid Temperature on Outlet Temperature")
     elif tp_name == "TP3":
-        plt.bar(results["hot_fluids"], results["T_out"], color="#ED1B2F", edgecolor="black")
-        plt.xlabel("Hot Fluid", fontsize=12)
-        plt.ylabel("Outlet Temperature (°C)", fontsize=12)
-        plt.title("TP3: Impact of Hot Fluid Choice on Outlet Temperature", fontsize=14, pad=10)
-        plt.xticks(rotation=45, ha="right")
+        plt.bar(results["hot_fluids"], results["T_out"])
+        plt.xlabel("Hot Fluid")
+        plt.ylabel("Outlet Temperature (°C)")
+        plt.title("Effect of Hot Fluid on Outlet Temperature")
+        plt.xticks(rotation=45)
     elif tp_name == "TP4":
-        plt.plot(results["dimensions"], results["T_out"], marker="o", color="#ED1B2F", linestyle="-", linewidth=2)
-        plt.xlabel(f"{results['dimension_type'].capitalize()} (m)", fontsize=12)
-        plt.ylabel("Outlet Temperature (°C)", fontsize=12)
-        plt.title(f"TP4: Impact of {results['dimension_type'].capitalize()} on Outlet Temperature", fontsize=14, pad=10)
+        plt.plot(results["dimensions"], results["T_out"], 'g-', label="Outlet Temperature")
+        plt.xlabel(f"Pipe {results.get('dimension_type', 'Dimension')} (m)")
+        plt.ylabel("Outlet Temperature (°C)")
+        plt.title(f"Effect of Pipe {results.get('dimension_type', 'Dimension')} on Outlet Temperature")
     
-    plt.grid(True, linestyle="--", alpha=0.7)
+    plt.grid(True)
+    plt.legend()
     plt.tight_layout()
-    plt.savefig(plot_path, bbox_inches="tight")
+    plt.savefig(plo_path, dpi=300)
     plt.close()
     
-    return str(plot_path)
+    return str(plo_path)

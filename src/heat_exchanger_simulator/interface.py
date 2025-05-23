@@ -6,6 +6,7 @@ from core import simulate_tp1, simulate_tp2, simulate_tp3, simulate_tp4
 from utils import specific_heat_capacity, thermal_conductivity
 from report import write_tex
 from plotting import generate_plot
+from pathlib import Path
 
 class HeatExchangerSimulator:
     def __init__(self):
@@ -385,7 +386,9 @@ class HeatExchangerSimulator:
                                 params["dimension_type"], params["dim_start"], params["dim_end"], params["dim_steps"],
                                 params["gap"]
                             )
-                        plot_path = generate_plot(tp_name, results)
+                        output_dir = Path("temp_plots")
+                        output_dir.mkdir(exist_ok=True)
+                        plot_path = generate_plot(tp_name, results, output_dir=output_dir)
                         img = Image.open(plot_path)
                         img = img.resize((600, 400), Image.Resampling.LANCZOS)
                         img_tk = ImageTk.PhotoImage(img)
