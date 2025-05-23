@@ -10,13 +10,13 @@ from utils import specific_heat_capacity
 
 def ecriture_graphique(file, tp_name, results, plo_path):
     """
-    Écrit un graphique dans le fichier LaTeX en utilisant une image PNG générée.
+    Write a graphic to the LaTeX file using a generated PNG image.
     
-    Parameters:
-        file: Fichier LaTeX ouvert
-        tp_name (str): Nom du TP (ex. "TP1")
-        results (dict): Résultats de la simulation
-        plo_path (str): Chemin vers l’image PNG du graphe
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP (e.g., "TP1").
+        results (dict): Simulation results.
+        plo_path (str): Path to the PNG plot.
     """
     caption = f"Simulation results for {tp_name}"
     label = f"fig:{tp_name.lower()}_results"
@@ -29,13 +29,20 @@ def ecriture_graphique(file, tp_name, results, plo_path):
 
 def ecriture_results(file, tp_name, results):
     """
-    Écrit les résultats pour les paramètres idéaux (maximisant T_out) sous forme de phrases.
+    Write optimal results (maximizing T_out) as sentences.
     
-    Parameters:
-        file: Fichier LaTeX ouvert
-        tp_name (str): Nom du TP
-        results (dict): Résultats de la simulation
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
     """
+    required_keys = ["T_out", "Q", "efficiency", "U", "delta_T_lm", "h_internal", "h_external", "A"]
+    if not all(key in results for key in required_keys):
+        file.write(f'''\\subsection{{Optimal Results}}
+Les résultats optimaux n'ont pas pu être calculés en raison de données manquantes.
+''')
+        return
+
     max_T_out_idx = np.argmax(results["T_out"])
     T_out = round(results["T_out"][max_T_out_idx], 2)
     Q = round(results["Q"][max_T_out_idx], 2)
@@ -51,7 +58,7 @@ For the optimal parameters maximizing the outlet temperature, the simulation yie
 \\begin{{itemize}}
     \\item The outlet temperature is: {T_out} °C
     \\item The heat transferred is: {Q} W
-    \\item The efficiency is: {efficiency} \%
+    \\item The efficiency is: {efficiency} \\%
     \\item The overall heat transfer coefficient (U) is: {U} W/m²·K
     \\item The logarithmic mean temperature difference (LMTD) is: {delta_T_lm} °C
     \\item The internal convection coefficient is: {h_internal} W/m²·K
@@ -61,7 +68,11 @@ For the optimal parameters maximizing the outlet temperature, the simulation yie
 
 def ecriture_equation(file, tp_name):
     """
-    Écrit les équations utilisées dans la simulation.
+    Write the equations used in the simulation.
+    
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
     """
     equation = """
     Q = \\dot{m} \\cdot c_p \\cdot (T_{out} - T_{in}) \\quad \\text{(Heat transfer)} \\\\
@@ -73,37 +84,45 @@ def ecriture_equation(file, tp_name):
 
 def ecriture_itemiz(file, params, results):
     """
-    Écrit une liste des paramètres dans une liste itemize, incluant toutes les entrées utilisateur.
+    Write a list of parameters in an itemize list, including all user inputs.
+    
+    Args:
+        file: Open LaTeX file.
+        params (dict): Simulation parameters.
+        results (dict): Simulation results.
     """
+    # Nettoyer les paramètres pour éviter les caractères problématiques
+    safe_params = {k: str(v).replace('_', ' ').replace('%', '\\%').replace('#', '\\#') for k, v in params.items()}
+    
     items = [
-        f"\\item Cold Fluid: {params.get('fluid', 'N/A')}",
-        f"\\item Hot Fluid: {params.get('hot_fluid', 'N/A')}",
-        f"\\item Material: {params.get('material', 'N/A')}",
-        f"\\item Cold Inlet Temperature: {params.get('T_cold_in', 'N/A')} °C",
-        f"\\item Hot Inlet Temperature: {params.get('T_hot_in', 'N/A')} °C",
-        f"\\item Pipe Length: {params.get('pipe_length', 'N/A')} m",
-        f"\\item Pipe Diameter: {params.get('pipe_diameter', 'N/A')} m",
-        f"\\item Pipe Thickness: {params.get('pipe_thickness', 'N/A')} m",
-        f"\\item Gap: {params.get('gap', 'N/A')} m",
+        f"\\item Cold Fluid: {safe_params.get('fluid', 'N/A')}",
+        f"\\item Hot Fluid: {safe_params.get('hot_fluid', 'N/A')}",
+        f"\\item Material: {safe_params.get('material', 'N/A')}",
+        f"\\item Cold Inlet Temperature: {safe_params.get('T_cold_in', 'N/A')} °C",
+        f"\\item Hot Inlet Temperature: {safe_params.get('T_hot_in', 'N/A')} °C",
+        f"\\item Pipe Length: {safe_params.get('pipe_length', 'N/A')} m",
+        f"\\item Pipe Diameter: {safe_params.get('pipe_diameter', 'N/A')} m",
+        f"\\item Pipe Thickness: {safe_params.get('pipe_thickness', 'N/A')} m",
+        f"\\item Gap: {safe_params.get('gap', 'N/A')} m",
     ]
     
-    if "flow_start" in params:
-        items.append(f"\\item Start Flow Rate: {params.get('flow_start', 'N/A')} L/min")
-        items.append(f"\\item End Flow Rate: {params.get('flow_end', 'N/A')} L/min")
-        items.append(f"\\item Flow Steps: {params.get('flow_steps', 'N/A')}")
-    if "flow_cold" in params:
-        items.append(f"\\item Cold Flow Rate: {params.get('flow_cold', 'N/A')} L/min")
-    if "flow_hot" in params:
-        items.append(f"\\item Hot Flow Rate: {params.get('flow_hot', 'N/A')} L/min")
-    if "T_hot_start" in params:
-        items.append(f"\\item Start Hot Temperature: {params.get('T_hot_start', 'N/A')} °C")
-        items.append(f"\\item End Hot Temperature: {params.get('T_hot_end', 'N/A')} °C")
-        items.append(f"\\item Hot Temperature Steps: {params.get('T_hot_steps', 'N/A')}")
-    if "dimension_type" in params:
-        items.append(f"\\item Dimension Type: {params.get('dimension_type', 'N/A')}")
-        items.append(f"\\item Start Dimension: {params.get('dim_start', 'N/A')} m")
-        items.append(f"\\item End Dimension: {params.get('dim_end', 'N/A')} m")
-        items.append(f"\\item Dimension Steps: {params.get('dim_steps', 'N/A')}")
+    if "flow_start" in safe_params:
+        items.append(f"\\item Start Flow Rate: {safe_params.get('flow_start', 'N/A')} L/min")
+        items.append(f"\\item End Flow Rate: {safe_params.get('flow_end', 'N/A')} L/min")
+        items.append(f"\\item Flow Steps: {safe_params.get('flow_steps', 'N/A')}")
+    if "flow_cold" in safe_params:
+        items.append(f"\\item Cold Flow Rate: {safe_params.get('flow_cold', 'N/A')} L/min")
+    if "flow_hot" in safe_params:
+        items.append(f"\\item Hot Flow Rate: {safe_params.get('flow_hot', 'N/A')} L/min")
+    if "T_hot_start" in safe_params:
+        items.append(f"\\item Start Hot Temperature: {safe_params.get('T_hot_start', 'N/A')} °C")
+        items.append(f"\\item End Hot Temperature: {safe_params.get('T_hot_end', 'N/A')} °C")
+        items.append(f"\\item Hot Temperature Steps: {safe_params.get('T_hot_steps', 'N/A')}")
+    if "dimension_type" in safe_params:
+        items.append(f"\\item Dimension Type: {safe_params.get('dimension_type', 'N/A')}")
+        items.append(f"\\item Start Dimension: {safe_params.get('dim_start', 'N/A')} m")
+        items.append(f"\\item End Dimension: {safe_params.get('dim_end', 'N/A')} m")
+        items.append(f"\\item Dimension Steps: {safe_params.get('dim_steps', 'N/A')}")
 
     items.extend([
         f"\\item Average Overall Heat Transfer Coefficient (U): {round(np.mean(results.get('U', [0])), 2)} W/m²·K",
@@ -113,16 +132,16 @@ def ecriture_itemiz(file, params, results):
 
     file.write(f'''\\begin{{itemize}}
     \\setlength\\itemsep{{-0.5em}}
-    {"nn".join(items)}
+    {"\n".join(items)}
     \\end{{itemize}}\\n''')
 
 def ecriture_introduction(file, tp_name):
     """
-    Écrit une introduction expliquant le but du TP.
+    Write an introduction explaining the purpose of the TP.
     
-    Parameters:
-        file: Fichier LaTeX ouvert
-        tp_name (str): Nom du TP
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
     """
     if tp_name == "TP1":
         purpose = (
@@ -158,13 +177,13 @@ def ecriture_introduction(file, tp_name):
 
 def ecriture_interpretation(file, tp_name, results, params):
     """
-    Écrit une interprétation claire et concise des résultats, avec une analyse physique.
+    Write a clear and concise interpretation of the results with physical analysis.
     
-    Parameters:
-        file: Fichier LaTeX ouvert
-        tp_name (str): Nom du TP
-        results (dict): Résultats de la simulation
-        params (dict): Paramètres de la simulation
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
+        params (dict): Simulation parameters.
     """
     max_T_out_idx = np.argmax(results["T_out"])
     max_T_out = round(results["T_out"][max_T_out_idx], 2)
@@ -225,12 +244,12 @@ def ecriture_interpretation(file, tp_name, results, params):
 
 def ecriture_conclusion(file, tp_name, results):
     """
-    Écrit une conclusion indiquant les paramètres idéaux maximisant T_out.
+    Write a conclusion indicating the optimal parameters maximizing T_out.
     
-    Parameters:
-        file: Fichier LaTeX ouvert
-        tp_name (str): Nom du TP
-        results (dict): Résultats de la simulation
+    Args:
+        file: Open LaTeX file.
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
     """
     max_T_out_idx = np.argmax(results["T_out"])
     max_T_out = round(results["T_out"][max_T_out_idx], 2)
@@ -255,26 +274,37 @@ def ecriture_conclusion(file, tp_name, results):
 
 def ecriture_template(tp_name, results, params, output_dir, base_filename):
     """
-    Écrit le template LaTeX complet avec tous les éléments.
+    Write the complete LaTeX template with all elements.
     
-    Parameters:
-        tp_name (str): Nom du TP
-        results (dict): Résultats de la simulation
-        params (dict): Paramètres de la simulation
-        output_dir (Path): Dossier de sortie
-        base_filename (str): Nom de base pour les fichiers (sans extension)
+    Args:
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
+        params (dict): Simulation parameters.
+        output_dir (Path): Output directory.
+        base_filename (str): Base filename (without extension).
+    
+    Returns:
+        tuple: Paths to the generated PDF, LaTeX, and PNG files, or None if failed.
     """
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
     tex_file = output_dir / f"{base_filename}.tex"
-    plo_path = generate_plot(tp_name, results, output_dir)
+    
+    try:
+        plo_path = generate_plot(tp_name, results, output_dir)
+        if not Path(plo_path).exists():
+            raise FileNotFoundError(f"Le fichier graphique {plo_path} n'a pas été généré.")
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Échec de la génération du graphique : {str(e)}")
+        return None
     
     title = f"Heat Exchanger Simulation Report: {tp_name}"
     author = params.get("author", "User")
     date = time.strftime("%d.%m.%Y")
     
-    with open(tex_file, "w", encoding="utf-8") as file:
-        file.write(f'''\\documentclass[12pt]{{article}}
+    try:
+        with open(tex_file, "w", encoding="utf-8") as file:
+            file.write(f'''\\documentclass[12pt]{{article}}
 \\usepackage[a4paper, total={{7in, 8in}}]{{geometry}}
 \\usepackage{{graphicx,amssymb,dsfont,fourier,xcolor,amsmath,ulem,filecontents,MnSymbol,wasysym}}
 \\usepackage[utf8]{{inputenc}}
@@ -289,32 +319,43 @@ def ecriture_template(tp_name, results, params, output_dir, base_filename):
 \\tableofcontents
 
 ''')
-        ecriture_introduction(file, tp_name)
-        file.write(f'''
+            ecriture_introduction(file, tp_name)
+            file.write(f'''
 \\section{{Experimental Parameters}}
 ''')
-        ecriture_itemiz(file, params, results)
-        file.write(f'''
+            ecriture_itemiz(file, params, results)
+            file.write(f'''
 \\section{{Methodology}}
 The simulation uses the following heat transfer equations:
 ''')
-        ecriture_equation(file, tp_name)
-        
-        file.write(f'''
+            ecriture_equation(file, tp_name)
+            
+            file.write(f'''
 \\section{{Results and Discussion}}
 ''')
-        ecriture_graphique(file, tp_name, results, plo_path)
-        ecriture_results(file, tp_name, results)
-        
-        ecriture_interpretation(file, tp_name, results, params)
-        ecriture_conclusion(file, tp_name, results)
-        
-        file.write(f'''
+            ecriture_graphique(file, tp_name, results, plo_path)
+            ecriture_results(file, tp_name, results)
+            
+            ecriture_interpretation(file, tp_name, results, params)
+            ecriture_conclusion(file, tp_name, results)
+            
+            file.write(f'''
 \\end{{document}}
 ''')
+    except Exception as e:
+        messagebox.showerror("Erreur", f"Échec de l'écriture du fichier LaTeX : {str(e)}")
+        return None
     
     try:
-        result = subprocess.run(["pdflatex", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)], capture_output=True, text=True)
+        # Utiliser encoding='utf-8' avec errors='replace' pour gérer les caractères problématiques
+        result = subprocess.run(
+            ["pdflatex", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_file)],
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            errors='replace',
+            check=True
+        )
         pdf_file = output_dir / f"{base_filename}.pdf"
         if not pdf_file.exists():
             messagebox.showerror("Erreur", f"Échec de la compilation LaTeX :\n{result.stderr}")
@@ -323,34 +364,43 @@ The simulation uses the following heat transfer equations:
     except FileNotFoundError:
         messagebox.showerror("Erreur", "MiKTeX (pdflatex) n'est pas installé ou n'est pas dans le PATH.\nVérifiez votre installation MiKTeX.")
         return None
+    except subprocess.CalledProcessError as e:
+        # Afficher la sortie avec encodage nettoyé
+        stderr_cleaned = e.stderr.encode('utf-8', errors='replace').decode('utf-8')
+        messagebox.showerror("Erreur", f"Erreur lors de la compilation LaTeX :\n{stderr_cleaned}")
+        return None
     finally:
+        # Nettoyage des fichiers auxiliaires
         for ext in [".aux", ".log", ".out", ".toc"]:
             aux_file = output_dir / f"{base_filename}{ext}"
             if aux_file.exists():
-                aux_file.unlink()
+                try:
+                    aux_file.unlink()
+                except Exception:
+                    pass
 
 def write_tex(tp_name, results, params):
     """
-    Fonction principale pour générer le rapport PDF, LaTeX et PNG dans un dossier.
+    Generate a LaTeX report and prompt the user to save it.
+    
+    Args:
+        tp_name (str): Name of the TP.
+        results (dict): Simulation results.
+        params (dict): Simulation parameters.
     """
-    folder_path = filedialog.askdirectory(
-        title="Choisir un dossier pour sauvegarder le rapport"
-    )
-    if not folder_path:
-        messagebox.showwarning("Annulé", "Génération du rapport annulée.")
+    root = tk.Tk()
+    root.withdraw()
+    
+    output_dir = filedialog.askdirectory(title=f"Select Output Directory for {tp_name} Report")
+    if not output_dir:
+        messagebox.showinfo("Annulé", "Aucun dossier sélectionné. Le rapport n'a pas été généré.")
+        root.destroy()
         return
-
-    base_name = f"rapport_{tp_name.lower()}_{time.strftime('%Y%m%d')}"
-    output_dir = Path(folder_path) / base_name
-    counter = 1
-    while output_dir.exists():
-        output_dir = Path(folder_path) / f"{base_name}_{counter}"
-        counter += 1
-
-    result = ecriture_template(tp_name, results, params, output_dir, f"rapport_{tp_name.lower()}")
+    
+    base_filename = f"{tp_name.lower()}_report_{int(time.time())}"
+    result = ecriture_template(tp_name, results, params, output_dir, base_filename)
+    
     if result:
-        pdf_path, tex_path, png_path = result
-        messagebox.showinfo("Succès", f"Rapport généré dans : {output_dir}\n"
-                                     f"- PDF : {pdf_path}\n"
-                                     f"- LaTeX : {tex_path}\n"
-                                     f"- Graphique : {png_path}")
+        pdf_path, _, _ = result
+        messagebox.showinfo("Succès", f"Rapport généré avec succès : {pdf_path}")
+    root.destroy()
