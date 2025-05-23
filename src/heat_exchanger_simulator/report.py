@@ -194,13 +194,13 @@ def ecriture_interpretation(file, tp_name, results, params):
         delta_T_lm = round(results["delta_T_lm"][max_T_out_idx], 2)
         interpretation = (
             "In TP1, we varied the cold fluid flow rate to observe its impact on the heat exchanger's performance. "
-            "Higher flow rates increase the internal convection coefficient (h_internal) by boosting the Reynolds number, "
+            "Higher flow rates increase the internal convection coefficient ($h_{internal}$) by boosting the Reynolds number, "
             "which enhances the overall heat transfer coefficient (U). For instance, at the optimal flow rate, "
-            f"h_internal reaches {h_internal} W/m²·K. However, increased flow reduces the fluid's residence time in the "
-            "exchanger, leading to a lower outlet temperature (T_out) at very high flows. The logarithmic mean temperature "
-            f"difference (LMTD), such as {delta_T_lm} °C at the optimal point, decreases as T_out rises, reflecting a smaller "
+            "$h_{internal}$ reaches",h_internal,"W/m²·K. However, increased flow reduces the fluid's residence time in the "
+            "exchanger, leading to a lower outlet temperature ($T_{out}$) at very high flows. The logarithmic mean temperature "
+            "difference (LMTD), such as",delta_T_lm,"°C at the optimal point, decreases as $T_{out}$ rises, reflecting a smaller "
             "temperature gradient. The optimal flow rate balances enhanced convection with sufficient residence time, "
-            f"achieving a maximum T_out of {max_T_out} °C at {flow_rate} L/min."
+            "achieving a maximum $T_{out} of",max_T_out,"°C at",flow_rate,"L/min."
         )
     elif tp_name == "TP2":
         T_hot_in = results["T_hot_in"][max_T_out_idx]
