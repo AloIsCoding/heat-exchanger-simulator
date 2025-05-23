@@ -313,7 +313,7 @@ def ecriture_conclusion(file, tp_name, results):
     file.write(f'''\\section{{Conclusion}}
 {conclusion}\n''')
 
-def ecriture_template(tp_name, results, params, output_dir, base_filename):
+def ecriture_template(tp_name, results, params, output_dir, base_filename,name):
     """
     Write the complete LaTeX template with all elements.
     
@@ -329,7 +329,7 @@ def ecriture_template(tp_name, results, params, output_dir, base_filename):
     """
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
-    tex_file = output_dir / f"{base_filename}.tex"
+    tex_file = output_dir / f"{name}.tex"
     
     try:
         plo_path = generate_plot(tp_name, results, output_dir)
@@ -396,7 +396,7 @@ The following parameters were used in the simulation, with default values applie
             errors='replace',
             check=True
         )
-        pdf_file = output_dir / f"{base_filename}.pdf"
+        pdf_file = output_dir / f"{name}.pdf"
         if not pdf_file.exists():
             messagebox.showerror("Erreur", f"Échec de la compilation LaTeX :\n{result.stderr}")
             return None
@@ -412,7 +412,7 @@ The following parameters were used in the simulation, with default values applie
     finally:
         # Nettoyage des fichiers auxiliaires
         for ext in [".aux", ".log", ".out", ".toc"]:
-            aux_file = output_dir / f"{base_filename}{ext}"
+            aux_file = output_dir / f"{name}{ext}"
             if aux_file.exists():
                 try:
                     aux_file.unlink()
@@ -428,8 +428,7 @@ def write_tex(tp_name, results, params):
         results (dict): Simulation results.
         params (dict): Simulation parameters.
     """
-    filename = demander_nom_fichier(tp_name, results, params)
-    
+    demander_nom_fichier(tp_name, results, params)
 
 
 def save_folder(tp_name, results, params,file_name):
